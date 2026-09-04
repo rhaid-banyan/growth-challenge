@@ -164,7 +164,7 @@ route('GET', '/api/config/public', (c) => {
   return {
     challenge_name: cfg.challenge_name, total_fund_usd: cfg.total_fund_usd, word_limit: cfg.word_limit,
     deadline: cfg.deadline, deadline_label: cfg.deadline_label, deadline_tz: cfg.deadline_tz, deadline_passed: deadlinePassed(cfg),
-    operating_groups: cfg.operating_groups, currencies: cfg.currencies, fx_to_usd: cfg.fx_to_usd, key_dates: cfg.key_dates || [],
+    operating_groups: cfg.operating_groups, currencies: cfg.currencies, fx_to_usd: cfg.fx_to_usd, key_dates: cfg.key_dates || [], submissions_open: cfg.submissions_open || '',
     rounds: Object.fromEntries(['1', '2', '3'].map((r) => [r, { name: cfg.rounds[r].name, status: cfg.rounds[r].status }])),
     round2_dimensions: cfg.round2_dimensions,
   };
@@ -429,7 +429,7 @@ route('PUT', '/api/admin/config', async (c, req) => {
   requireAdmin(c);
   const body = await readBody(req);
   const cfg = c.cfg;
-  const allowed = ['challenge_name', 'total_fund_usd', 'word_limit', 'deadline', 'deadline_label', 'deadline_tz', 'key_dates', 'operating_groups', 'currencies', 'fx_to_usd', 'admins', 'rounds', 'round2_dimensions'];
+  const allowed = ['challenge_name', 'total_fund_usd', 'word_limit', 'deadline', 'deadline_label', 'deadline_tz', 'key_dates', 'submissions_open', 'operating_groups', 'currencies', 'fx_to_usd', 'admins', 'rounds', 'round2_dimensions'];
   for (const k of allowed) if (k in body) cfg[k] = body[k];
   // normalise rounds
   for (const r of ['1', '2', '3']) {

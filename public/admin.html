@@ -313,6 +313,7 @@
             <label class="field"><span class="lbl">Deadline (ISO 8601 with offset)</span><input type="text" id="s-deadline" value="${E(cfg.deadline)}"><div class="help">Eastern time is <code>-04:00</code> in October (EDT). Submissions lock after this moment.</div></label>
             <label class="field"><span class="lbl">Deadline as shown to OpCos</span><input type="text" id="s-deadline-label" value="${E(cfg.deadline_label)}"><div class="help">Display time zone: <input type="text" id="s-deadline-tz" value="${E(cfg.deadline_tz || 'America/New_York')}" style="width:200px;padding:3px 8px;display:inline-block;font-size:13px"></div></label>
           </div>
+          <label class="field"><span class="lbl">Submissions open (YYYY-MM-DD, shown on the overview)</span><input type="text" id="s-open" value="${E(cfg.submissions_open || '')}" style="max-width:200px"></label>
           <label class="field"><span class="lbl">Key dates (one per line: YYYY-MM-DD | label | detail)</span><textarea id="s-keydates" style="min-height:130px;font-family:ui-monospace,Menlo,monospace;font-size:13px">${E((cfg.key_dates || []).map((k) => [k.date, k.label, k.detail || ''].join(' | ')).join('\n'))}</textarea><div class="help">Shown in the Key dates card on the overview page.</div></label>
           <label class="field"><span class="lbl">Round names</span><div class="field-row" style="grid-template-columns:1fr 1fr 1fr">${['1', '2', '3'].map((r) => `<input type="text" data-rname="${r}" value="${E(cfg.rounds[r].name)}" placeholder="Round ${r}">`).join('')}</div></label>
           <div class="eyebrow mt-8">Indicative FX to USD</div>
@@ -342,6 +343,7 @@
       cfg.deadline = document.getElementById('s-deadline').value.trim();
       cfg.deadline_label = document.getElementById('s-deadline-label').value.trim();
       cfg.deadline_tz = document.getElementById('s-deadline-tz').value.trim() || 'America/New_York';
+      cfg.submissions_open = document.getElementById('s-open').value.trim();
       cfg.key_dates = document.getElementById('s-keydates').value.split('\n').map((l) => l.split('|').map((x) => x.trim())).filter((a) => /^\d{4}-\d{2}-\d{2}$/.test(a[0])).map((a) => ({ date: a[0], label: a[1] || '', detail: a[2] || '' }));
       for (const r of ['1', '2', '3']) cfg.rounds[r].name = document.querySelector(`[data-rname="${r}"]`).value.trim() || cfg.rounds[r].name;
       document.querySelectorAll('[data-fx]').forEach((i) => { const v = parseFloat(i.value); if (Number.isFinite(v)) cfg.fx_to_usd[i.dataset.fx] = v; });

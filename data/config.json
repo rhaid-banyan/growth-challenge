@@ -3,9 +3,14 @@
   "total_fund_usd": 3000000,
   "word_limit": 300,
   "deadline": "2026-10-02T23:59:00-04:00",
-  "deadline_label": "Friday, October 2, 2026 · 11:59 PM ET",
+  "deadline_label": "Friday, October 2, 2026 \u00b7 11:59 PM ET",
   "deadline_tz": "America/New_York",
   "key_dates": [
+    {
+      "date": "2026-09-17",
+      "label": "Submissions open",
+      "detail": "Portal opens to all operating companies"
+    },
     {
       "date": "2026-10-02",
       "label": "Deadline for submissions",
@@ -347,5 +352,6 @@
       "key": "d5",
       "label": "Execution risk (5 = low risk)"
     }
-  ]
+  ],
+  "submissions_open": "2026-09-17"
 }
