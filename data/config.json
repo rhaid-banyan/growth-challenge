@@ -14,12 +14,12 @@
     },
     {
       "date": "2026-10-02",
-      "label": "Deadline for submissions",
+      "label": "Submission deadline",
       "detail": "11:59 PM ET"
     },
     {
       "date": "2026-10-13",
-      "label": "Round 1 and Round 2 reviews complete",
+      "label": "Preliminary reviews complete",
       "detail": ""
     },
     {
@@ -29,8 +29,8 @@
     },
     {
       "date": "2026-10-26",
-      "label": "Allocations and winners finalized",
-      "detail": "Announcements made"
+      "label": "Winners announced",
+      "detail": "Via email and Slack"
     },
     {
       "date": "2026-11-09",
