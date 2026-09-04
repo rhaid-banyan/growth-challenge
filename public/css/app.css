@@ -13,6 +13,7 @@
   --text-2: #6c6c6c;
   --text-3: #8a8a8a;
   --text-4: #9a9a9a;
+  --text-5: #000;
   --line: #e7e7e7;
   --line-2: #f0f0f0;
   --page: #e9eae8;
@@ -83,13 +84,13 @@ main { flex: 1; }
 .card + .card { margin-top: 16px; }
 .card-title { display: flex; align-items: center; gap: 9px; font-family: var(--font-heading); font-weight: 600; font-size: 18px; color: var(--moss); margin-bottom: 8px; }
 .card-title svg { width: 20px; height: 20px; }
-.card .sub { font-size: 14px; color: var(--text-2); line-height: 1.5; }
+.card .sub { font-size: 14px; color: var(--text-5); line-height: 1.5; }
 .section-head { display: flex; align-items: flex-end; justify-content: space-between; border-left: 4px solid var(--moss); padding-left: 16px; margin: 32px 0 16px; }
 .section-head .eyebrow { margin-bottom: 4px; }
 
 .hero { position: relative; overflow: hidden; background: var(--moss); border-radius: 8px; padding: 34px 38px; color: #fff; }
 .hero h2 { color: #fff; font-size: 30px; line-height: 1.15; margin-bottom: 12px; }
-.hero p { font-weight: 300; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,.82); margin-bottom: 22px; max-width: 640px; }
+.hero p { font-weight: 300; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,1); margin-bottom: 22px; max-width: 640px; }
 .hero .meta { font-size: 13px; color: rgba(255,255,255,.7); }
 .hero .btn.light { background: #fff; color: var(--moss); }
 .hero .deco { position: absolute; right: -40px; top: -60px; width: 320px; height: 320px; border-radius: 50%; background: rgba(155,203,235,.14); pointer-events: none; }
@@ -216,7 +217,7 @@ table.data tr.clickable { cursor: pointer; }
 .timeline .step { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; position: relative; }
 .timeline .step .n { font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: .06em; color: var(--text-3); text-transform: uppercase; }
 .timeline .step .t { font-family: var(--font-heading); font-weight: 600; font-size: 16px; color: var(--moss); margin: 6px 0 6px; }
-.timeline .step .d { font-size: 13.5px; color: var(--text-2); line-height: 1.45; }
+.timeline .step .d { font-size: 13.5px; color: var(--text-5); line-height: 1.45; }
 .bar-row { display: grid; grid-template-columns: 220px 1fr 60px; align-items: center; gap: 12px; padding: 7px 0; font-size: 14px; }
 .bar-row .bar { height: 10px; background: var(--line-2); border-radius: 999px; overflow: hidden; }
 .bar-row .bar > span { display: block; height: 100%; background: var(--moss); }

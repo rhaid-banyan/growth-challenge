@@ -438,6 +438,17 @@ route('PUT', '/api/admin/config', async (c, req) => {
     rd.raters = (rd.raters || []).map((x) => ({ email: auth.norm(x.email), name: x.name || '', title: x.title || '', groups: Array.isArray(x.groups) ? x.groups : [] })).filter((x) => x.email);
     cfg.rounds[r] = rd;
   }
+  // One source of truth for the deadline: everything else is derived from it.
+  cfg.deadline_tz = 'America/New_York';
+  const dl = new Date(cfg.deadline);
+  if (!Number.isNaN(dl.getTime())) {
+    const f = (opt) => dl.toLocaleString('en-US', { timeZone: cfg.deadline_tz, ...opt });
+    cfg.deadline_label = `${f({ weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })} · ${f({ hour: 'numeric', minute: '2-digit' })} ET`;
+    const ymd = dl.toLocaleDateString('en-CA', { timeZone: cfg.deadline_tz }); // YYYY-MM-DD in Eastern
+    for (const k of cfg.key_dates || []) if (k.key === 'deadline') { k.date = ymd; k.detail = f({ hour: 'numeric', minute: '2-digit' }) + ' ET'; }
+  }
+  const openEntry = (cfg.key_dates || []).find((k) => k.key === 'open');
+  if (openEntry) cfg.submissions_open = openEntry.date;
   cfg.admins = (cfg.admins || []).map((a) => (typeof a === 'string' ? { email: auth.norm(a), name: '', title: '' } : { email: auth.norm(a.email), name: a.name || '', title: a.title || '' })).filter((a) => a.email);
   store.saveConfig(cfg);
   return { ok: true, config: cfg };

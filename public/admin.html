@@ -310,11 +310,9 @@
             <label class="field"><span class="lbl">Word limit</span><input type="number" id="s-words" value="${cfg.word_limit}"></label>
           </div>
           <div class="field-row">
-            <label class="field"><span class="lbl">Deadline (ISO 8601 with offset)</span><input type="text" id="s-deadline" value="${E(cfg.deadline)}"><div class="help">Eastern time is <code>-04:00</code> in October (EDT). Submissions lock after this moment.</div></label>
-            <label class="field"><span class="lbl">Deadline as shown to OpCos</span><input type="text" id="s-deadline-label" value="${E(cfg.deadline_label)}"><div class="help">Display time zone: <input type="text" id="s-deadline-tz" value="${E(cfg.deadline_tz || 'America/New_York')}" style="width:200px;padding:3px 8px;display:inline-block;font-size:13px"></div></label>
+            <label class="field"><span class="lbl">Submission deadline (Eastern Time)</span><div class="row" style="gap:8px"><input type="date" id="s-deadline-date" style="max-width:190px"><input type="time" id="s-deadline-time" style="max-width:130px"><span class="small muted">EDT</span></div><div class="help">Submissions lock at this moment. The key-dates entry and all deadline text on the site follow it automatically.</div></label>
           </div>
-          <label class="field"><span class="lbl">Submissions open (YYYY-MM-DD, shown on the overview)</span><input type="text" id="s-open" value="${E(cfg.submissions_open || '')}" style="max-width:200px"></label>
-          <label class="field"><span class="lbl">Key dates (one per line: YYYY-MM-DD | label | detail)</span><textarea id="s-keydates" style="min-height:130px;font-family:ui-monospace,Menlo,monospace;font-size:13px">${E((cfg.key_dates || []).map((k) => [k.date, k.label, k.detail || ''].join(' | ')).join('\n'))}</textarea><div class="help">Shown in the Key dates card on the overview page.</div></label>
+          <label class="field"><span class="lbl">Key dates (one per line: YYYY-MM-DD | label | detail)</span><textarea id="s-keydates" style="min-height:130px;font-family:ui-monospace,Menlo,monospace;font-size:13px">${E((cfg.key_dates || []).filter((k) => k.key !== 'deadline').map((k) => [k.date, k.label, k.detail || ''].join(' | ')).join('\n'))}</textarea><div class="help">Shown in the Key dates card on the overview page. The submission deadline is added automatically from the field above; the earliest line before the deadline is treated as the day submissions open.</div></label>
           <label class="field"><span class="lbl">Round names</span><div class="field-row" style="grid-template-columns:1fr 1fr 1fr">${['1', '2', '3'].map((r) => `<input type="text" data-rname="${r}" value="${E(cfg.rounds[r].name)}" placeholder="Round ${r}">`).join('')}</div></label>
           <div class="eyebrow mt-8">Indicative FX to USD</div>
           <div class="row" style="gap:10px">${cfg.currencies.map((c) => `<label class="small" style="display:flex;align-items:center;gap:6px"><strong>${c}</strong><input type="text" data-fx="${c}" value="${cfg.fx_to_usd[c] ?? ''}" style="width:70px;padding:5px 8px"></label>`).join('')}</div>
@@ -337,14 +335,24 @@
     </div>`;
 
     document.getElementById('go-people').addEventListener('click', (e) => { e.preventDefault(); tab = 'people'; history.replaceState(null, '', '?tab=people'); render(); });
+    // Prefill the deadline as an Eastern date and time.
+    (() => {
+      const d = new Date(cfg.deadline);
+      if (Number.isNaN(d.getTime())) return;
+      const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(d).map((x) => [x.type, x.value]));
+      document.getElementById('s-deadline-date').value = `${parts.year}-${parts.month}-${parts.day}`;
+      document.getElementById('s-deadline-time').value = `${parts.hour === '24' ? '00' : parts.hour}:${parts.minute}`;
+    })();
     document.getElementById('save-general').addEventListener('click', async () => {
       cfg.total_fund_usd = Math.round(parseFloat(document.getElementById('s-fund').value.replace(/[^0-9.]/g, '')) || 0);
       cfg.word_limit = parseInt(document.getElementById('s-words').value, 10) || 300;
-      cfg.deadline = document.getElementById('s-deadline').value.trim();
-      cfg.deadline_label = document.getElementById('s-deadline-label').value.trim();
-      cfg.deadline_tz = document.getElementById('s-deadline-tz').value.trim() || 'America/New_York';
-      cfg.submissions_open = document.getElementById('s-open').value.trim();
-      cfg.key_dates = document.getElementById('s-keydates').value.split('\n').map((l) => l.split('|').map((x) => x.trim())).filter((a) => /^\d{4}-\d{2}-\d{2}$/.test(a[0])).map((a) => ({ date: a[0], label: a[1] || '', detail: a[2] || '' }));
+      const dd = document.getElementById('s-deadline-date').value, dt = document.getElementById('s-deadline-time').value || '23:59';
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dd)) { GC.toast('Pick a deadline date', true); return; }
+      cfg.deadline = `${dd}T${dt}:00-04:00`; // Eastern Daylight Time
+      const existing = (cfg.key_dates || []).find((k) => k.key === 'deadline') || { key: 'deadline', label: 'Submission deadline', detail: '' };
+      const others = document.getElementById('s-keydates').value.split('\n').map((l) => l.split('|').map((x) => x.trim())).filter((a) => /^\d{4}-\d{2}-\d{2}$/.test(a[0])).map((a) => ({ date: a[0], label: a[1] || '', detail: a[2] || '' }));
+      const firstBefore = others.find((k) => k.date < dd); if (firstBefore) firstBefore.key = 'open';
+      cfg.key_dates = [...others, { ...existing, date: dd }].sort((a, b) => a.date.localeCompare(b.date));
       for (const r of ['1', '2', '3']) cfg.rounds[r].name = document.querySelector(`[data-rname="${r}"]`).value.trim() || cfg.rounds[r].name;
       document.querySelectorAll('[data-fx]').forEach((i) => { const v = parseFloat(i.value); if (Number.isFinite(v)) cfg.fx_to_usd[i.dataset.fx] = v; });
       await saveCfg(); renderSettings();
