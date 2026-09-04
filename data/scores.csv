@@ -1,57 +1,57 @@
 id,submission_id,round,rater_email,rater_name,score,d1,d2,d3,d4,d5,recommended_award_usd,notes,updated_at
-sc_f3a38c8ddc,gc_848535fd97,1,crollins@banyansoftware.com,Claire Rollins,4,,,,,,,Execution risk is the concern here.,2026-10-27T01:27:32.222Z
-sc_12cb5f37e0,gc_848535fd97,1,jkoegenboeg@banyansoftware.com,Julie Koegenboeg,3,,,,,,,They will likely do this anyway without funding.,2026-10-27T17:13:11.111Z
-sc_921b4317bf,gc_848535fd97,1,hhunter@banyansoftware.com,Henry Hunter,3,,,,,,,Best idea in the group.,2026-10-28T08:31:03.333Z
-sc_5157ed64d8,gc_848535fd97,1,ebrookman@banyansoftware.com,Erleyene Brookman,2,,,,,,,They will likely do this anyway without funding.,2026-10-27T20:54:28.888Z
-sc_8d66fad753,gc_5df7613424,1,crollins@banyansoftware.com,Claire Rollins,3,,,,,,,They will likely do this anyway without funding.,2026-10-25T11:55:15.555Z
-sc_b683dda959,gc_5df7613424,1,jkoegenboeg@banyansoftware.com,Julie Koegenboeg,4,,,,,,,Execution risk is the concern here.,2026-10-25T17:44:14.444Z
-sc_e1cedea9d9,gc_5df7613424,1,hhunter@banyansoftware.com,Henry Hunter,2,,,,,,,Best idea in the group.,2026-10-25T22:25:26.666Z
-sc_25ffcaf85f,gc_5df7613424,1,ebrookman@banyansoftware.com,Erleyene Brookman,3,,,,,,,,2026-10-28T07:32:12.222Z
-sc_54c1cc9eba,gc_c38e024a43,1,crollins@banyansoftware.com,Claire Rollins,5,,,,,,,They will likely do this anyway without funding.,2026-10-25T14:12:58.888Z
-sc_7e36d3e6b8,gc_c38e024a43,1,hhunter@banyansoftware.com,Henry Hunter,4,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-26T20:13:45.555Z
-sc_4b17ec135d,gc_c38e024a43,1,mpardo@banyansoftware.com,Maria Lucia Pardo,4,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-27T01:34:32.222Z
-sc_18e2fb74fe,gc_d44708f176,1,crollins@banyansoftware.com,Claire Rollins,4,,,,,,,Best idea in the group.,2026-10-26T18:20:11.111Z
-sc_f8ac2a02f6,gc_d44708f176,1,jkoegenboeg@banyansoftware.com,Julie Koegenboeg,3,,,,,,,They will likely do this anyway without funding.,2026-10-25T22:38:03.333Z
-sc_fc9c424b17,gc_d44708f176,1,hhunter@banyansoftware.com,Henry Hunter,1,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-26T12:01:28.888Z
-sc_9eacb47f85,gc_d44708f176,1,mpardo@banyansoftware.com,Maria Lucia Pardo,2,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-26T21:02:15.555Z
-sc_59fdab2229,gc_b91d3b9fa3,1,crollins@banyansoftware.com,Claire Rollins,2,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-27T15:51:14.444Z
-sc_cc0a43e21e,gc_b91d3b9fa3,1,hhunter@banyansoftware.com,Henry Hunter,4,,,,,,,Execution risk is the concern here.,2026-10-28T01:38:41.111Z
-sc_5cc86f6e74,gc_9405371629,1,kingo@banyansoftware.com,Kay Ingo,3,,,,,,,,2026-10-25T15:08:36.666Z
-sc_dc4548eee3,gc_35ff3debaf,1,kingo@banyansoftware.com,Kay Ingo,3,,,,,,,Execution risk is the concern here.,2026-10-28T02:25:22.222Z
-sc_b5b813f96a,gc_db35abf0c4,1,asrinivasan@banyansoftware.com,Arun Srinivasan,3,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-26T03:01:01.111Z
-sc_d0a8bb0aa4,gc_e3fb0025bf,1,asrinivasan@banyansoftware.com,Arun Srinivasan,5,,,,,,,Execution risk is the concern here.,2026-10-25T17:08:53.333Z
-sc_0b991d52b7,gc_02832b89d4,1,asrinivasan@banyansoftware.com,Arun Srinivasan,4,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-27T18:22:18.888Z
-sc_d6cbbf5b85,gc_4284ed5303,1,asrinivasan@banyansoftware.com,Arun Srinivasan,4,,,,,,,They will likely do this anyway without funding.,2026-10-26T09:34:37.777Z
-sc_f835cbbfc8,gc_06f2c1a5f6,1,asrinivasan@banyansoftware.com,Arun Srinivasan,3,,,,,,,Execution risk is the concern here.,2026-10-25T13:43:52.222Z
-sc_3eee5f889b,gc_06f2c1a5f6,1,sryczek@banyansoftware.com,Stephen Ryczek,2,,,,,,,Execution risk is the concern here.,2026-10-27T23:49:31.111Z
-sc_9bc64c271f,gc_edafa4d325,1,owreford@banyansoftware.com,Oliver Wreford,4,,,,,,,They will likely do this anyway without funding.,2026-10-25T17:56:57.777Z
-sc_cc9a64c7c0,gc_f64e9a2a9d,1,dharris@banyansoftware.com,Darren Harris,4,,,,,,,,2026-10-27T19:24:24.444Z
-sc_3762afe716,gc_f64e9a2a9d,1,tprendiville@banyansoftware.com,Tom Prendiville,5,,,,,,,,2026-10-26T04:11:51.111Z
-sc_8c34514a5a,gc_a85e8694e7,1,tprendiville@banyansoftware.com,Tom Prendiville,3,,,,,,,Execution risk is the concern here.,2026-10-26T14:27:45.555Z
-sc_afec8a7515,gc_bb10289a3c,1,acole@banyansoftware.com,Adam Cole,5,,,,,,,Execution risk is the concern here.,2026-10-26T07:48:32.222Z
-sc_f4a5d8e2ad,gc_bb10289a3c,1,vmatheus@banyansoftware.com,Valentina Matheus,3,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-27T02:34:11.111Z
-sc_4f8c3de538,gc_39bdecef08,1,dharris@banyansoftware.com,Darren Harris,3,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-27T04:04:06.666Z
-sc_2e2d7b0e31,gc_39bdecef08,1,acole@banyansoftware.com,Adam Cole,2,,,,,,,Execution risk is the concern here.,2026-10-26T07:50:52.222Z
-sc_0fd38cffc8,gc_39bdecef08,1,vmatheus@banyansoftware.com,Valentina Matheus,3,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-27T18:56:31.111Z
-sc_d72a52d680,gc_c8bb54201c,1,sburgess@banyansoftware.com,Scott Burgess,4,,,,,,,,2026-10-28T07:03:57.777Z
-sc_d699aead95,gc_c8bb54201c,1,bzakrzewski@banyansoftware.com,Bridget Zakrzewski,5,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-27T05:48:30.000Z
-sc_8c98c7351a,gc_a6c7c9fd0f,1,tjordan@banyansoftware.com,Tristan Jordan,3,,,,,,,Execution risk is the concern here.,2026-10-26T08:18:35.555Z
-sc_f237724096,gc_a6c7c9fd0f,1,sburgess@banyansoftware.com,Scott Burgess,4,,,,,,,,2026-10-26T09:27:34.444Z
-sc_64de17355f,gc_a6c7c9fd0f,1,bzakrzewski@banyansoftware.com,Bridget Zakrzewski,4,,,,,,,,2026-10-25T17:28:46.666Z
-sc_f8340ced99,gc_a038ac7b6f,1,tjordan@banyansoftware.com,Tristan Jordan,3,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-25T13:55:32.222Z
-sc_ff7c15b4e2,gc_a038ac7b6f,1,sburgess@banyansoftware.com,Scott Burgess,5,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-25T09:41:11.111Z
-sc_1bc1cbd458,gc_a038ac7b6f,1,bzakrzewski@banyansoftware.com,Bridget Zakrzewski,4,,,,,,,Best idea in the group.,2026-10-26T04:59:03.333Z
-sc_0c2fd0ffc4,gc_5503f91a79,1,tjordan@banyansoftware.com,Tristan Jordan,1,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-26T21:22:28.888Z
-sc_096473b8d5,gc_4680afbfdf,1,akrushnakumaar@banyansoftware.com,Amrith Krushnakumaar,2,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-25T20:47:16.666Z
-sc_55c8092e6e,gc_69c7f6e683,1,rfawell@banyansoftware.com,Reed Fawell,3,,,,,,,,2026-10-28T02:44:02.222Z
-sc_e020d174d3,gc_69c7f6e683,1,shendrick@banyansoftware.com,Susie Hendrick,2,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-25T13:59:41.111Z
-sc_c3d6502a5c,gc_69c7f6e683,1,rsalisbury@banyansoftware.com,Ryan Salisbury,3,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-28T06:47:33.333Z
-sc_eb6faaea21,gc_9d572dcf35,1,shendrick@banyansoftware.com,Susie Hendrick,4,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-26T19:34:34.444Z
-sc_4a382ad38e,gc_9d572dcf35,1,rsalisbury@banyansoftware.com,Ryan Salisbury,1,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-26T04:35:46.666Z
-sc_eababcd34c,gc_9d572dcf35,1,jdipaolo@banyansoftware.com,Jordan Di Paolo,2,,,,,,,,2026-10-25T14:02:32.222Z
-sc_7f3382bcbc,gc_d1b09b4052,1,rfawell@banyansoftware.com,Reed Fawell,4,,,,,,,They will likely do this anyway without funding.,2026-10-27T10:48:11.111Z
-sc_179ce67c07,gc_d1b09b4052,1,shendrick@banyansoftware.com,Susie Hendrick,4,,,,,,,They will likely do this anyway without funding.,2026-10-26T19:06:03.333Z
-sc_1d77898dd4,gc_d1b09b4052,1,rsalisbury@banyansoftware.com,Ryan Salisbury,4,,,,,,,,2026-10-25T12:29:28.888Z
-sc_e70995324b,gc_e83c433700,1,asrinivasan@banyansoftware.com,Arun Srinivasan,3,,,,,,,Execution risk is the concern here.,2026-10-27T21:30:15.555Z
-sc_c57fa42e15,gc_66776e99f9,1,dbrice@banyansoftware.com,David Brice,3,,,,,,,Execution risk is the concern here.,2026-10-26T05:51:02.222Z
-sc_7533921f4b,gc_dd403fa971,1,dbrice@banyansoftware.com,David Brice,3,,,,,,,Best idea in the group.,2026-10-27T06:06:41.111Z
+sc_4ee37627d2,gc_08697e246a,1,crollins@banyansoftware.com,Claire Rollins,4,,,,,,,Execution risk is the concern here.,2026-10-23T15:27:32.222Z
+sc_16f22c22b4,gc_08697e246a,1,jkoegenboeg@banyansoftware.com,Julie Koegenboeg,3,,,,,,,They will likely do this anyway without funding.,2026-10-24T07:13:11.111Z
+sc_1ebe00aee3,gc_08697e246a,1,hhunter@banyansoftware.com,Henry Hunter,3,,,,,,,Best idea in the group.,2026-10-24T22:31:03.333Z
+sc_af51ff5feb,gc_08697e246a,1,ebrookman@banyansoftware.com,Erleyene Brookman,2,,,,,,,They will likely do this anyway without funding.,2026-10-24T10:54:28.888Z
+sc_6d2844ed47,gc_8089225e59,1,crollins@banyansoftware.com,Claire Rollins,3,,,,,,,They will likely do this anyway without funding.,2026-10-22T01:55:15.555Z
+sc_763f187fe7,gc_8089225e59,1,jkoegenboeg@banyansoftware.com,Julie Koegenboeg,4,,,,,,,Execution risk is the concern here.,2026-10-22T07:44:14.444Z
+sc_2eb0ed04bf,gc_8089225e59,1,hhunter@banyansoftware.com,Henry Hunter,2,,,,,,,Best idea in the group.,2026-10-22T12:25:26.666Z
+sc_c88dae5f04,gc_8089225e59,1,ebrookman@banyansoftware.com,Erleyene Brookman,3,,,,,,,,2026-10-24T21:32:12.222Z
+sc_fb3a9f441c,gc_bd8da413a6,1,crollins@banyansoftware.com,Claire Rollins,5,,,,,,,They will likely do this anyway without funding.,2026-10-22T04:12:58.888Z
+sc_d0428ae387,gc_bd8da413a6,1,hhunter@banyansoftware.com,Henry Hunter,4,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-23T10:13:45.555Z
+sc_592cea68ed,gc_bd8da413a6,1,mpardo@banyansoftware.com,Maria Lucia Pardo,4,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-23T15:34:32.222Z
+sc_f7fa7a6f44,gc_0024675888,1,crollins@banyansoftware.com,Claire Rollins,4,,,,,,,Best idea in the group.,2026-10-23T08:20:11.111Z
+sc_d6137454b8,gc_0024675888,1,jkoegenboeg@banyansoftware.com,Julie Koegenboeg,3,,,,,,,They will likely do this anyway without funding.,2026-10-22T12:38:03.333Z
+sc_0e558f2c49,gc_0024675888,1,hhunter@banyansoftware.com,Henry Hunter,1,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-23T02:01:28.888Z
+sc_6795e0e781,gc_0024675888,1,mpardo@banyansoftware.com,Maria Lucia Pardo,2,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-23T11:02:15.555Z
+sc_54875e14b9,gc_950cabb2f4,1,crollins@banyansoftware.com,Claire Rollins,2,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-24T05:51:14.444Z
+sc_f2de4fe084,gc_950cabb2f4,1,hhunter@banyansoftware.com,Henry Hunter,4,,,,,,,Execution risk is the concern here.,2026-10-24T15:38:41.111Z
+sc_54d95627cd,gc_210bb72a7f,1,kingo@banyansoftware.com,Kay Ingo,3,,,,,,,,2026-10-22T05:08:36.666Z
+sc_0cf6612472,gc_4ed3d8ccda,1,kingo@banyansoftware.com,Kay Ingo,3,,,,,,,Execution risk is the concern here.,2026-10-24T16:25:22.222Z
+sc_325b86578d,gc_5a0f206653,1,asrinivasan@banyansoftware.com,Arun Srinivasan,3,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-22T17:01:01.111Z
+sc_7a4eda98ee,gc_2b41913a2f,1,asrinivasan@banyansoftware.com,Arun Srinivasan,5,,,,,,,Execution risk is the concern here.,2026-10-22T07:08:53.333Z
+sc_f545fd2fe2,gc_fac9ab07df,1,asrinivasan@banyansoftware.com,Arun Srinivasan,4,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-24T08:22:18.888Z
+sc_9f47c76777,gc_1f353a3508,1,asrinivasan@banyansoftware.com,Arun Srinivasan,4,,,,,,,They will likely do this anyway without funding.,2026-10-22T23:34:37.777Z
+sc_31e7582657,gc_8e9202b561,1,asrinivasan@banyansoftware.com,Arun Srinivasan,3,,,,,,,Execution risk is the concern here.,2026-10-22T03:43:52.222Z
+sc_d7caa113d6,gc_8e9202b561,1,sryczek@banyansoftware.com,Stephen Ryczek,2,,,,,,,Execution risk is the concern here.,2026-10-24T13:49:31.111Z
+sc_3646cb2cf0,gc_629e2dbdc5,1,owreford@banyansoftware.com,Oliver Wreford,4,,,,,,,They will likely do this anyway without funding.,2026-10-22T07:56:57.777Z
+sc_9076dbd2f5,gc_324e0a2a4e,1,dharris@banyansoftware.com,Darren Harris,4,,,,,,,,2026-10-24T09:24:24.444Z
+sc_5bd3b3e9b1,gc_324e0a2a4e,1,tprendiville@banyansoftware.com,Tom Prendiville,5,,,,,,,,2026-10-22T18:11:51.111Z
+sc_18a6fd284c,gc_82006cf789,1,tprendiville@banyansoftware.com,Tom Prendiville,3,,,,,,,Execution risk is the concern here.,2026-10-23T04:27:45.555Z
+sc_9489fe8182,gc_4cd75122fa,1,acole@banyansoftware.com,Adam Cole,5,,,,,,,Execution risk is the concern here.,2026-10-22T21:48:32.222Z
+sc_73edadb9c2,gc_4cd75122fa,1,vmatheus@banyansoftware.com,Valentina Matheus,3,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-23T16:34:11.111Z
+sc_020f347e49,gc_46165aa5f8,1,dharris@banyansoftware.com,Darren Harris,3,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-23T18:04:06.666Z
+sc_4b7ed36ec1,gc_46165aa5f8,1,acole@banyansoftware.com,Adam Cole,2,,,,,,,Execution risk is the concern here.,2026-10-22T21:50:52.222Z
+sc_be5afeec8a,gc_46165aa5f8,1,vmatheus@banyansoftware.com,Valentina Matheus,3,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-24T08:56:31.111Z
+sc_4ac394cb60,gc_adb930ea6a,1,sburgess@banyansoftware.com,Scott Burgess,4,,,,,,,,2026-10-24T21:03:57.777Z
+sc_2d7be8dfee,gc_adb930ea6a,1,bzakrzewski@banyansoftware.com,Bridget Zakrzewski,5,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-23T19:48:30.000Z
+sc_95ac1145ce,gc_ee05616c2d,1,tjordan@banyansoftware.com,Tristan Jordan,3,,,,,,,Execution risk is the concern here.,2026-10-22T22:18:35.555Z
+sc_b3cb9726c1,gc_ee05616c2d,1,sburgess@banyansoftware.com,Scott Burgess,4,,,,,,,,2026-10-22T23:27:34.444Z
+sc_04e4c67f04,gc_ee05616c2d,1,bzakrzewski@banyansoftware.com,Bridget Zakrzewski,4,,,,,,,,2026-10-22T07:28:46.666Z
+sc_10ea950923,gc_a67aae8d48,1,tjordan@banyansoftware.com,Tristan Jordan,3,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-22T03:55:32.222Z
+sc_fb23914eab,gc_a67aae8d48,1,sburgess@banyansoftware.com,Scott Burgess,5,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-21T23:41:11.111Z
+sc_9f859a95b0,gc_a67aae8d48,1,bzakrzewski@banyansoftware.com,Bridget Zakrzewski,4,,,,,,,Best idea in the group.,2026-10-22T18:59:03.333Z
+sc_2bcaa5d941,gc_94fbc71b8b,1,tjordan@banyansoftware.com,Tristan Jordan,1,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-23T11:22:28.888Z
+sc_0083cbebab,gc_c800cffe46,1,akrushnakumaar@banyansoftware.com,Amrith Krushnakumaar,2,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-22T10:47:16.666Z
+sc_68d4141972,gc_6a17cd8e6c,1,rfawell@banyansoftware.com,Reed Fawell,3,,,,,,,,2026-10-24T16:44:02.222Z
+sc_64f2d8f124,gc_6a17cd8e6c,1,shendrick@banyansoftware.com,Susie Hendrick,2,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-22T03:59:41.111Z
+sc_d6415640c9,gc_6a17cd8e6c,1,rsalisbury@banyansoftware.com,Ryan Salisbury,3,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-24T20:47:33.333Z
+sc_bd91e2ee45,gc_fae0f263e8,1,shendrick@banyansoftware.com,Susie Hendrick,4,,,,,,,Would want to see the pipeline behind the ARR claim.,2026-10-23T09:34:34.444Z
+sc_1ce7d96b16,gc_fae0f263e8,1,rsalisbury@banyansoftware.com,Ryan Salisbury,1,,,,,,,Strong customer signal; ask feels right-sized.,2026-10-22T18:35:46.666Z
+sc_bb6e03df66,gc_fae0f263e8,1,jdipaolo@banyansoftware.com,Jordan Di Paolo,2,,,,,,,,2026-10-22T04:02:32.222Z
+sc_9148f12eb4,gc_fbfa1e915f,1,rfawell@banyansoftware.com,Reed Fawell,4,,,,,,,They will likely do this anyway without funding.,2026-10-24T00:48:11.111Z
+sc_e3734aa432,gc_fbfa1e915f,1,shendrick@banyansoftware.com,Susie Hendrick,4,,,,,,,They will likely do this anyway without funding.,2026-10-23T09:06:03.333Z
+sc_7cfe536ddb,gc_fbfa1e915f,1,rsalisbury@banyansoftware.com,Ryan Salisbury,4,,,,,,,,2026-10-22T02:29:28.888Z
+sc_9c55038e33,gc_1bf26e2310,1,asrinivasan@banyansoftware.com,Arun Srinivasan,3,,,,,,,Execution risk is the concern here.,2026-10-24T11:30:15.555Z
+sc_1612f32525,gc_150d13aab2,1,dbrice@banyansoftware.com,David Brice,3,,,,,,,Execution risk is the concern here.,2026-10-22T19:51:02.222Z
+sc_56e11e8a46,gc_43d6cbf4ef,1,dbrice@banyansoftware.com,David Brice,3,,,,,,,Best idea in the group.,2026-10-23T20:06:41.111Z

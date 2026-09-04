@@ -101,6 +101,8 @@
 <script src="/js/app.js"></script>
 <script>
 (async function () {
+  const statusBody = document.getElementById('status-body');
+  try {
   await GC.loadSession();
   GC.renderHeader('home');
   const s = GC.session;
@@ -110,26 +112,28 @@
   const set = (id, ic) => { const el = document.getElementById(id); if (el) el.innerHTML = GC.icons[ic]; };
   set('ic-1', 'lightbulb'); set('ic-2', 'layers'); set('ic-3', 'dollar'); set('ic-4', 'globe'); set('ic-5', 'trending');
   set('ic-status', 'fileText'); set('ic-cal', 'calendar'); set('ic-fund', 'target'); set('ic-q', 'users');
-  document.querySelector('#ct-write span').innerHTML = GC.icons.pen;
+  const ctw = document.querySelector('#ct-write span'); if (ctw) ctw.innerHTML = GC.icons.pen;
 
-  document.getElementById('stat-fund').textContent = GC.usdShort(cfg.total_fund_usd);
-  document.getElementById('stat-words').textContent = cfg.word_limit;
-  document.getElementById('stat-deadline').textContent = GC.date(cfg.deadline, { month: 'short', day: 'numeric' }, cfg.deadline_tz);
-  document.getElementById('tl-deadline').textContent = GC.date(cfg.deadline, { weekday: 'long', month: 'long', day: 'numeric' }, cfg.deadline_tz);
+  // setText tolerates missing elements so copy edits to the HTML never break the page.
+  const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+  setText('stat-fund', GC.usdShort(cfg.total_fund_usd));
+  setText('stat-words', cfg.word_limit);
+  setText('stat-deadline', GC.date(cfg.deadline, { month: 'short', day: 'numeric' }, cfg.deadline_tz));
+  setText('tl-deadline', GC.date(cfg.deadline, { weekday: 'long', month: 'long', day: 'numeric' }, cfg.deadline_tz));
   const today = new Date().toISOString().slice(0, 10);
-  document.getElementById('key-dates').innerHTML = (cfg.key_dates || []).map((k, i) => {
+  const kd = document.getElementById('key-dates');
+  if (kd) kd.innerHTML = (cfg.key_dates || []).map((k, i) => {
     const d = new Date(k.date + 'T12:00:00Z'); const past = k.date < today;
     return `<div class="list-row" style="${i === 0 ? 'border-top:0' : ''}"><div class="tile lg" style="flex-direction:column;line-height:1;${past ? 'background:var(--line-2);color:var(--text-2)' : ''}"><span style="font-weight:600;font-size:11px;letter-spacing:.05em">${d.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' }).toUpperCase()}</span><span style="font-family:var(--font-heading);font-weight:600;font-size:21px;margin-top:2px">${d.getUTCDate()}</span></div><div style="min-width:0"><div style="font-weight:600;font-size:14.5px;color:var(--ink)">${GC.esc(k.label)}</div><div class="small muted">${d.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' })}${k.detail ? ' · ' + GC.esc(k.detail) : ''}</div></div></div>`;
   }).join('');
-  document.getElementById('hero-countdown').textContent = cfg.deadline_passed ? 'Submissions closed ' + GC.date(cfg.deadline, null, cfg.deadline_tz) : GC.countdown(cfg.deadline) + ' · closes ' + GC.date(cfg.deadline, { month: 'short', day: 'numeric' }, cfg.deadline_tz);
+  setText('hero-countdown', cfg.deadline_passed ? 'Submissions closed ' + GC.date(cfg.deadline, null, cfg.deadline_tz) : GC.countdown(cfg.deadline) + ' · closes ' + GC.date(cfg.deadline, { month: 'short', day: 'numeric' }, cfg.deadline_tz));
 
-  if (cfg.submissions_open) document.getElementById('tl-open').textContent = GC.date(cfg.submissions_open + 'T12:00:00Z', { weekday: 'long', month: 'long', day: 'numeric' }, 'UTC');
+  if (cfg.submissions_open) setText('tl-open', GC.date(cfg.submissions_open + 'T12:00:00Z', { weekday: 'long', month: 'long', day: 'numeric' }, 'UTC'));
 
-  if (s.user) document.getElementById('hello-eyebrow').textContent = `Your Banyan portal · ${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}`;
+  if (s.user) setText('hello-eyebrow', `Your Banyan portal · ${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}`);
 
-  const headCta = document.getElementById('head-cta');
-  const heroCta = document.getElementById('hero-cta');
-  const statusBody = document.getElementById('status-body');
+  const headCta = document.getElementById('head-cta') || document.createElement('div');
+  const heroCta = document.getElementById('hero-cta') || document.createElement('a');
 
   if (!s.user) {
     headCta.innerHTML = `<a class="btn" href="/login?next=%2Fsubmit">Sign in to submit ${GC.icons.arrowRight}</a>`;
@@ -163,6 +167,10 @@
     headCta.innerHTML = r.isAdmin ? `<a class="btn" href="/admin">Open admin ${GC.icons.arrowRight}</a>` : `<a class="btn" href="/review">Open review ${GC.icons.arrowRight}</a>`;
     heroCta.href = r.isAdmin ? '/admin' : '/review'; heroCta.innerHTML = (r.isAdmin ? 'Open admin ' : 'Open review ') + GC.icons.arrowRight;
     statusBody.innerHTML = `<span class="pill sky">Banyan</span><div class="mt-8">${bits.join(' ') || 'You are signed in as a Banyan viewer.'}</div>`;
+  }
+  } catch (err) {
+    console.error(err);
+    if (statusBody) statusBody.innerHTML = `<div class="notice err">Something went wrong loading this page (${GC.esc(err.message)}). Try refreshing; if it keeps happening, contact the Banyan team.</div>`;
   }
 })();
 </script>
