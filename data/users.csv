@@ -1,0 +1,33 @@
+email,name,title,opco,operating_group
+dean.c@iconi.example,Dean Carville,CEO,ICONI Software,UK and RoE
+phil.m@atamis.example,Phil Musgrave,CEO,Atamis,UK and RoE
+andy.k@intuitive.example,Andy Keeley,CEO,intuitive,UK and RoE
+juan.c@hhs.example,Juan Correia,CEO,HOST Hotel Systems,UK and RoE
+viktor.k@flexi.example,Viktor Kuttner,CEO,Flexi Medical Cloud,UK and RoE
+lena.h@ordoware.example,Lena Hartmann,Geschäftsführerin,Ordoware GmbH,DACH
+markus.b@kraftplan.example,Markus Bauer,CEO,KraftPlan Software,DACH
+sophie.w@zeitlog.example,Sophie Weber,CEO,ZeitLog AG,DACH
+carla.r@meterwise.example,Carla Ruiz,CEO,MeterWise,MIU
+james.o@gridlane.example,James Okafor,CEO,GridLane Systems,MIU
+priya.n@fieldflow.example,Priya Natarajan,CEO,FieldFlow,MIU
+tom.g@wellsync.example,Tom Gallagher,President,WellSync,MIU
+maria.l@civicledger.example,Maria Lopez,CEO,CivicLedger,GovTech
+anne.d@courtstream.example,Anne Dubois,CEO,CourtStream,GovTech
+rachel.k@campusloop.example,Rachel Kim,CEO,CampusLoop,EdTech
+daniel.m@gradebook.example,Daniel Mensah,CEO,GradeBook Pro,EdTech
+ines.f@escolaplus.example,Inês Ferreira,CEO,EscolaPlus,EdTech
+sam.p@clinicore.example,Sam Patel,CEO,CliniCore,Healthcare
+helen.w@therapynote.example,Helen Wright,CEO,TherapyNote,Healthcare
+luis.a@dentalink.example,Luis Almeida,CEO,DentaLink,Healthcare
+greg.s@fleetmark.example,Greg Sullivan,CEO,FleetMark,"Transportation, Logistics, and Longtail"
+nadia.h@portside.example,Nadia Haddad,CEO,Portside Software,"Transportation, Logistics, and Longtail"
+eric.l@routecraft.example,Eric Lindqvist,CEO,RouteCraft,"Transportation, Logistics, and Longtail"
+jw.s@presspage.example,Jan-Willem Schalkwijk,CEO,Presspage,Media and Communications
+olivia.b@newsdesk.example,Olivia Bennett,CEO,Newsdesk Suite,Media and Communications
+kai.z@signalhub.example,Kai Zhang,CEO,SignalHub,Media and Communications
+nora.b@lendcore.example,Nora Bishop,CEO,LendCore,Financial Services
+david.o@trustbook.example,David Okonkwo,CEO,TrustBook Systems,Financial Services
+hamish.d@shapeshifter.example,Hamish Dean,CEO,Shapeshifter,MIU
+brenton.o@touchstream.example,Brenton Ough,CEO,Touchstream,ANZ
+mei.t@harbourbooks.example,Mei Tan,CEO,HarbourBooks,ANZ
+liam.w@paddockiq.example,Liam Walsh,CEO,PaddockIQ,ANZ

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review · Banyan 2026 Growth Challenge</title>
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/app.css">
+<style>
+  .queue { display: flex; flex-direction: column; gap: 6px; }
+  .q-item { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; cursor: pointer; text-align: left; font-family: var(--font-body); transition: border-color .12s; }
+  .q-item:hover { border-color: var(--moss); }
+  .q-item.on { border-color: var(--moss); box-shadow: inset 0 0 0 1px var(--moss); background: #fbfdfb; }
+  .q-item .t { font-weight: 600; color: var(--ink); font-size: 14.5px; line-height: 1.3; }
+  .q-item .m { font-size: 12.5px; color: var(--text-3); margin-top: 2px; }
+  .q-item .idx { font-family: var(--font-heading); font-weight: 600; font-size: 12px; color: var(--text-4); }
+  .detail-wrap { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 20px; align-items: start; }
+  @media (max-width: 1080px) { .detail-wrap { grid-template-columns: 1fr; } }
+  .group-label { font-weight: 600; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); margin: 14px 0 6px; }
+  .group-label:first-child { margin-top: 0; }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main>
+<div class="container">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">2026 Growth Challenge</div>
+      <h1 style="font-size:36px">Review</h1>
+    </div>
+    <div id="progress-pill"></div>
+  </div>
+  <div id="tabs" class="tabs"></div>
+  <div id="round-notice"></div>
+  <div id="body"></div>
+</div>
+</main>
+<div id="site-footer"></div>
+
+<script src="/js/app.js"></script>
+<script>
+(async function () {
+  await GC.loadSession();
+  GC.renderHeader('review');
+  if (!GC.requireLogin()) return;
+  const cfg = await GC.get('/api/config/public');
+  const R = await GC.get('/api/review/rounds');
+  const body = document.getElementById('body'), tabs = document.getElementById('tabs'), notice = document.getElementById('round-notice'), progressPill = document.getElementById('progress-pill');
+
+  if (!R.rounds.length) { body.innerHTML = '<div class="notice warn">You are not assigned as a reviewer in any round. If that is unexpected, contact the Banyan team.</div>'; return; }
+
+  let round = Number(GC.qs('round')) || (R.rounds.find((r) => r.status === 'open') || R.rounds[0]).round;
+  let queue = null, selected = null, justSaved = null;
+
+  const R1_LEGEND = ['Do not fund', 'Weak', 'Solid contender', 'Strong', 'Fund no matter what'];
+  const R3_LEGEND = ['Do not fund', 'Reluctant', 'Fund if room', 'Fund', 'Must fund'];
+
+  function renderTabs() {
+    tabs.innerHTML = R.rounds.map((r) => `<button class="${r.round === round ? 'on' : ''}" data-round="${r.round}">Round ${r.round} · ${GC.esc(r.name)} <span class="pill ${r.status === 'open' ? '' : 'grey'}" style="font-size:11px;padding:2px 8px">${r.status}</span></button>`).join('');
+    tabs.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { round = Number(b.dataset.round); selected = null; history.replaceState(null, '', '?round=' + round); load(); }));
+  }
+
+  async function load() {
+    renderTabs();
+    const meta = R.rounds.find((r) => r.round === round);
+    const data = await GC.get(`/api/review/${round}/queue`);
+    queue = data;
+    const done = data.items.filter((i) => i.my_score).length;
+    progressPill.innerHTML = `<span class="pill ${done === data.items.length && data.items.length ? 'solid' : ''}">${GC.icons.checkCircle} ${done} of ${data.items.length} scored</span>`;
+
+    const groups = meta.groups && meta.groups.length ? ` for <strong>${meta.groups.map(GC.esc).join(', ')}</strong>` : '';
+    let n = '';
+    if (data.status !== 'open') n += `<div class="notice warn mb-16">${GC.icons.lock} Round ${round} is <strong>${data.status}</strong>. ${data.status === 'pending' ? 'You can preview the queue, but scoring opens when the Banyan team starts the round.' : 'Scores are locked.'}</div>`;
+    n += `<div class="notice info mb-16">${GC.icons.eyeOff} <strong>Blind review.</strong> You are scoring ${round === 1 ? 'every proposal' + groups : 'each proposal'} independently. Other reviewers' scores and the composite stay hidden${data.reveal_scores ? ': except that the Banyan team has revealed panel scores for discussion, shown below your own.' : ' until the round closes.'} ${round === 1 ? 'Rate on a simple 1 to 5: 1 = do not fund, 3 = solid contender, 5 = fund no matter what.' : round === 2 ? 'Score five dimensions 1 to 5; your composite is the average.' : 'Record your conviction 1 to 5 and, optionally, the award you would recommend in USD.'}</div>`;
+    notice.innerHTML = n;
+
+    if (!data.items.length) { body.innerHTML = `<div class="card"><div class="muted">No proposals are in Round ${round}${groups.replace('<strong>', '').replace('</strong>', '')} yet.</div></div>`; return; }
+    if (!selected || !data.items.some((i) => i.id === selected)) selected = (data.items.find((i) => !i.my_score) || data.items[0]).id;
+    renderBody();
+  }
+
+  function nextUnscoredId(fromId) {
+    const i = queue.items.findIndex((x) => x.id === fromId);
+    const n = queue.items.slice(i + 1).find((x) => !x.my_score) || queue.items.find((x) => !x.my_score && x.id !== fromId);
+    return n ? n.id : null;
+  }
+
+  function renderQueue() {
+    const items = queue.items;
+    const byGroup = {};
+    for (const it of items) (byGroup[it.operating_group || 'Other'] = byGroup[it.operating_group || 'Other'] || []).push(it);
+    let idx = 0;
+    const showGroups = round === 1 && Object.keys(byGroup).length > 1 || round !== 1;
+    const rows = (list) => list.map((it) => { idx++; return `<button class="q-item ${it.id === selected ? 'on' : ''}" data-id="${it.id}">
+        <span class="idx">${idx}</span>
+        <span><div class="t">${GC.esc(it.title)}</div><div class="m">${GC.esc(it.opco)} · ${GC.money(it.capital_ask, it.currency)} ${GC.esc(it.currency)}</div></span>
+        <span class="score-chip ${it.my_score ? '' : 'empty'}">${it.my_score ? GC.score(it.my_score.score) : '-'}</span>
+      </button>`; }).join('');
+    const html = showGroups
+      ? Object.keys(byGroup).sort().map((g) => `<div class="group-label">${GC.esc(g)} · ${byGroup[g].length}</div>${rows(byGroup[g])}`).join('')
+      : rows(items);
+    return `<div class="queue">${html}</div>`;
+  }
+
+  function scale(name, value, legend, small) {
+    return `<div class="score-scale ${small ? 'sm' : ''}" data-name="${name}">${[1, 2, 3, 4, 5].map((v) => `<button type="button" data-v="${v}" class="${Number(value) === v ? 'on' : ''}" title="${legend ? GC.esc(legend[v - 1]) : ''}">${v}</button>`).join('')}</div>${legend ? `<div class="scale-legend"><span>1 · ${GC.esc(legend[0])}</span><span>3 · ${GC.esc(legend[2])}</span><span>5 · ${GC.esc(legend[4])}</span></div>` : ''}`;
+  }
+
+  function renderDetail(it) {
+    const my = it.my_score || {};
+    const open = queue.status === 'open';
+    let scoring = '';
+    if (round === 1) {
+      scoring = `<div class="lbl">Overall rating <span class="req">*</span></div>${scale('score', my.score, R1_LEGEND)}`;
+    } else if (round === 2) {
+      scoring = `<div class="lbl">Five dimensions <span class="req">*</span></div>` + queue.dimensions.map((d, i) => `<div class="dim"><div class="dim-label"><span>${i + 1}. ${GC.esc(d.label)}</span><span class="val" data-val-for="${d.key}">${my[d.key] || ''}</span></div>${scale(d.key, my[d.key], null, true)}</div>`).join('') +
+        `<div class="row between mt-16" style="background:var(--moss-tint);border-radius:6px;padding:10px 14px"><span style="font-weight:600;color:var(--moss)">Your composite</span><span class="score-chip hi" id="composite">${my.score ? GC.score(my.score) : '-'}</span></div>`;
+    } else {
+      scoring = `<div class="lbl">Fund conviction <span class="req">*</span></div>${scale('score', my.score, R3_LEGEND)}
+        <label class="field mt-16"><span class="lbl">Recommended award (USD, optional)</span><input type="text" id="rec-award" inputmode="numeric" value="${my.recommended_award_usd ? Number(my.recommended_award_usd).toLocaleString('en-US') : ''}" placeholder="e.g. 250,000"><div class="help">Their ask is ${GC.money(it.capital_ask, it.currency)} ${GC.esc(it.currency)} ≈ ${GC.usd(it.capital_ask_usd)}. Leave blank if you would not fund.</div></label>`;
+    }
+
+    const finance = (it.ltm_revenue || it.ltm_growth || it.purchase_price) ? `<div class="card tight mt-16"><div class="eyebrow" style="margin-bottom:8px">Finance context (from Banyan)</div><dl class="kv">${it.ltm_revenue ? `<dt>LTM revenue</dt><dd>${GC.esc(it.ltm_revenue)}</dd>` : ''}${it.ltm_growth ? `<dt>LTM growth / performance</dt><dd>${GC.esc(it.ltm_growth)}</dd>` : ''}${it.purchase_price ? `<dt>Purchase price</dt><dd>${GC.esc(it.purchase_price)}</dd>` : ''}</dl></div>` : '';
+    const followUp = it.follow_up_request ? `<div class="card tight mt-16" style="border-left:4px solid var(--sky)"><div class="eyebrow" style="margin-bottom:8px">Follow-up with the CEO</div><div class="small" style="margin-bottom:8px"><strong>Asked:</strong> ${GC.esc(it.follow_up_request)}</div><div class="small">${it.follow_up_response ? '<strong>Response:</strong> ' + GC.esc(it.follow_up_response) : '<span class="muted">Awaiting response.</span>'}</div></div>` : '';
+
+    let panel = '';
+    if (it.panel && queue.reveal_scores) {
+      panel = `<div class="card tight mt-16" style="background:#fafbfa"><div class="eyebrow" style="margin-bottom:8px">Panel scores (revealed)</div><div class="row between mb-8"><span class="small">Composite across ${GC.plural(it.panel.n, 'reviewer')}</span><span class="score-chip hi">${GC.score(it.panel.composite) ?? '-'}</span></div>${it.panel.raters.map((r) => `<div class="list-row" style="padding:7px 0"><span class="avatar muted" style="width:26px;height:26px;font-size:11px">${GC.esc(GC.initials(r.rater_name))}</span><span class="small" style="flex:1"><strong>${GC.esc(r.rater_name)}</strong>${r.notes ? ': ' + GC.esc(r.notes) : ''}</span><span class="score-chip">${GC.score(r.composite) ?? '-'}</span></div>`).join('')}</div>`;
+    }
+
+    const i = queue.items.findIndex((x) => x.id === it.id);
+    const nav = `<div class="row between mt-16"><button class="btn ghost sm" id="prev" ${i === 0 ? 'disabled' : ''}>${GC.icons.arrowLeft} Previous</button><span class="small muted">${i + 1} of ${queue.items.length}</span><button class="btn ghost sm" id="next" ${i === queue.items.length - 1 ? 'disabled' : ''}>Next ${GC.icons.arrowRight}</button></div>`;
+
+    return `
+      <div class="card">
+        <div class="row between" style="align-items:flex-start">
+          <div>
+            <div class="eyebrow" style="margin-bottom:6px">${GC.esc(it.operating_group)} · ${GC.esc(it.opco)}</div>
+            <h2 style="font-size:22px;line-height:1.25">${GC.esc(it.title)}</h2>
+            <div class="small muted mt-8">Submitted by ${GC.esc(it.name)}${it.title_role ? ', ' + GC.esc(it.title_role) : ''} · ${GC.dateTime(it.submitted_at)} · ${it.word_count} words</div>
+          </div>
+          <div style="text-align:right"><div class="eyebrow muted" style="margin-bottom:4px">Capital ask</div><div style="font-family:var(--font-heading);font-weight:600;font-size:22px;color:var(--moss)">${GC.money(it.capital_ask, it.currency)} <span style="font-size:13px;color:var(--text-3)">${GC.esc(it.currency)}</span></div>${it.currency !== 'USD' ? `<div class="small muted">≈ ${GC.usd(it.capital_ask_usd)}</div>` : ''}</div>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--line-2);margin:18px 0">
+        <div class="idea-text">${GC.esc(it.idea)}</div>
+        ${followUp}${finance}
+      </div>
+
+      <div class="card mt-16" id="score-card">
+        <div class="card-title"><span>${GC.icons.target}</span>Your score${my.updated_at ? `<span class="pill ${justSaved === it.id ? 'solid' : 'grey'}" style="margin-left:auto;font-size:11px">${GC.icons.check} Saved ${GC.dateTime(my.updated_at)}</span>` : ''}</div>
+        ${justSaved === it.id ? `<div class="notice ok mb-16">${GC.icons.checkCircle} Your score of <strong>${GC.score(my.score)}</strong> is saved. You can change it any time while the round is open.${nextUnscoredId(it.id) ? ` <a href="#" id="go-next-unscored" style="font-weight:600;margin-left:6px">Next unscored proposal ${GC.icons.arrowRight}</a>` : ' All proposals in your queue are scored.'}</div>` : ''}
+        <form id="score-form" ${open ? '' : 'class="readonly-form"'}>
+          ${scoring}
+          <label class="field mt-16"><span class="lbl">Notes (optional, visible to the Banyan team)</span><textarea id="notes" style="min-height:90px" placeholder="What stood out, what you would want to know before funding…">${GC.esc(my.notes || '')}</textarea></label>
+          <div class="row between"><div class="small muted" id="score-msg"></div><div class="row">${nextUnscoredId(it.id) && my.updated_at ? `<button type="button" class="btn outline" data-next-unscored>Next unscored ${GC.icons.arrowRight}</button>` : ''}<button type="submit" class="btn" ${open ? '' : 'disabled'}>${my.updated_at ? 'Update score' : 'Save score'}</button></div></div>
+        </form>
+        ${panel}
+      </div>
+      ${nav}`;
+  }
+
+  function renderBody() {
+    const it = queue.items.find((x) => x.id === selected);
+    body.innerHTML = `<div class="detail-wrap"><div>${renderQueue()}</div><div id="detail">${renderDetail(it)}</div></div>`;
+    body.querySelectorAll('.q-item').forEach((b) => b.addEventListener('click', () => { justSaved = null; selected = b.dataset.id; renderBody(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+    wireDetail(it);
+  }
+
+  function wireDetail(it) {
+    const form = document.getElementById('score-form');
+    const state = { score: it.my_score ? it.my_score.score : '', d1: '', d2: '', d3: '', d4: '', d5: '' };
+    if (it.my_score) for (const k of ['d1', 'd2', 'd3', 'd4', 'd5']) state[k] = it.my_score[k] || '';
+    form.querySelectorAll('.score-scale').forEach((sc) => {
+      sc.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => {
+        if (queue.status !== 'open') return;
+        sc.querySelectorAll('button').forEach((x) => x.classList.remove('on')); b.classList.add('on');
+        state[sc.dataset.name] = Number(b.dataset.v);
+        const v = form.querySelector(`[data-val-for="${sc.dataset.name}"]`); if (v) v.textContent = b.dataset.v;
+        if (round === 2) { const ds = ['d1', 'd2', 'd3', 'd4', 'd5'].map((k) => Number(state[k])).filter(Boolean); document.getElementById('composite').textContent = ds.length === 5 ? GC.score(ds.reduce((a, c) => a + c, 0) / 5) : '-'; }
+      }));
+    });
+    const i = queue.items.findIndex((x) => x.id === it.id);
+    const go = (d) => { const n = queue.items[i + d]; if (n) { justSaved = null; selected = n.id; renderBody(); window.scrollTo({ top: 0, behavior: 'smooth' }); } };
+    document.getElementById('prev').addEventListener('click', () => go(-1));
+    document.getElementById('next').addEventListener('click', () => go(1));
+    const goNext = (e) => { e.preventDefault(); const n = nextUnscoredId(it.id); if (n) { justSaved = null; selected = n; renderBody(); window.scrollTo({ top: 0, behavior: 'smooth' }); } };
+    const gn = document.getElementById('go-next-unscored'); if (gn) gn.addEventListener('click', goNext);
+    const bn = form.querySelector('[data-next-unscored]'); if (bn) bn.addEventListener('click', goNext);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('score-msg');
+      const payload = { notes: document.getElementById('notes').value };
+      if (round === 2) Object.assign(payload, { d1: state.d1, d2: state.d2, d3: state.d3, d4: state.d4, d5: state.d5 });
+      else payload.score = state.score;
+      if (round === 3) payload.recommended_award_usd = document.getElementById('rec-award').value;
+      const btn = form.querySelector('button[type=submit]'); btn.disabled = true;
+      try {
+        await GC.api('PUT', `/api/review/${round}/proposal/${it.id}/score`, payload);
+        // Refresh the queue so the chip and progress update, but STAY on this
+        // proposal so the reviewer can see their score was saved.
+        queue = await GC.get(`/api/review/${round}/queue`);
+        const done = queue.items.filter((x) => x.my_score).length;
+        progressPill.innerHTML = `<span class="pill ${done === queue.items.length ? 'solid' : ''}">${GC.icons.checkCircle} ${done} of ${queue.items.length} scored</span>`;
+        justSaved = it.id;
+        renderBody();
+        GC.toast('Score saved');
+      } catch (err) { msg.textContent = err.message; msg.style.color = 'var(--red)'; btn.disabled = false; }
+    });
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

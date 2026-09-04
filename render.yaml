@@ -1,0 +1,25 @@
+# Render blueprint: one small Node web service with a persistent disk for the CSV data.
+# In Render: New > Blueprint > pick this repo. Render reads this file and creates the service.
+services:
+  - type: web
+    name: banyan-growth-challenge
+    runtime: node
+    plan: starter            # smallest paid plan; a persistent disk requires a paid plan
+    buildCommand: ""         # no dependencies to install
+    startCommand: npm start
+    healthCheckPath: /api/gate
+    disk:
+      name: gc-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: GC_DATA_DIR
+        value: /data
+      - key: GC_DEMO_PASSWORD
+        value: Banyan2026
+      - key: GC_SEED_ON_EMPTY
+        value: "true"         # loads the demo directory and proposals on the first boot only
+      - key: GC_SECRET
+        generateValue: true   # signs session cookies; generated once by Render
+      - key: NODE_VERSION
+        value: "22"

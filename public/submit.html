@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit your idea · Banyan 2026 Growth Challenge</title>
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div id="site-header"></div>
+<main>
+<div class="container">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">2026 Growth Challenge</div>
+      <h1 style="font-size:36px" id="page-title">Submit your idea</h1>
+    </div>
+    <div id="deadline-pill"></div>
+  </div>
+
+  <div id="gate"></div>
+
+  <div class="grid side" id="form-wrap" style="display:none">
+    <div>
+      <form class="card" id="form" novalidate>
+        <div class="eyebrow">About you</div>
+        <p class="sub mb-16">Pulled from your Banyan Business Portal profile. If anything here is wrong, contact the Banyan team rather than editing: reviewers rely on it to route your proposal to the right Operating Group.</p>
+        <div class="field-row">
+          <label class="field"><span class="lbl">Your name</span><input type="text" id="f-name" readonly></label>
+          <label class="field"><span class="lbl">Email</span><input type="text" id="f-email" readonly></label>
+        </div>
+        <div class="field-row">
+          <label class="field"><span class="lbl">Operating company</span><input type="text" id="f-opco" readonly></label>
+          <label class="field"><span class="lbl">Operating Group</span><input type="text" id="f-group" readonly></label>
+        </div>
+
+        <div class="eyebrow mt-16">Your proposal</div>
+        <label class="field"><span class="lbl">Title <span class="req">*</span></span><input type="text" id="f-title" maxlength="120" placeholder="e.g. Launch a compliance module for mid-market credit unions"><div class="help">A short, specific name reviewers will recognise across rounds.</div></label>
+
+        <label class="field">
+          <span class="lbl">Your idea <span class="req">*</span></span>
+          <textarea id="f-idea" placeholder="Cover the idea, the execution plan, the specific capital ask and where it goes, the new or incremental market it unlocks, and the ROI you expect within 12 months."></textarea>
+          <div class="row between"><div class="help" style="margin:0">Cover: idea · execution plan · capital ask · market unlock · 12-month ROI</div><div class="counter" id="counter">0 / 300 words</div></div>
+        </label>
+
+        <div class="field-row ask">
+          <label class="field"><span class="lbl">Currency <span class="req">*</span></span><select id="f-currency"></select></label>
+          <label class="field"><span class="lbl">Capital ask <span class="req">*</span></span><input type="text" id="f-ask" inputmode="decimal" placeholder="250,000"><div class="help" id="usd-preview">Enter the total you are requesting.</div></label>
+          <div class="field"><span class="lbl">How it's treated</span><div class="help" style="margin-top:10px">Awarded funding is excluded from your OpEx budget and bonus plan calculations. Ask for what the plan needs; we expect to fund several proposals.</div></div>
+        </div>
+
+        <label class="check mt-8"><input type="checkbox" id="f-attest"><span>This proposal reflects our own thinking about our business and its market. We may have used tools to sharpen the writing, but every claim here is one we would stand behind in a conversation with the reviewers.</span></label>
+
+        <div class="row between mt-24">
+          <div class="small muted" id="last-saved"></div>
+          <div class="row">
+            <button type="button" class="btn danger sm hidden" id="withdraw">Withdraw proposal</button>
+            <button type="submit" class="btn" id="save">Submit proposal</button>
+          </div>
+        </div>
+        <div id="form-msg" class="mt-16"></div>
+      </form>
+    </div>
+
+    <aside>
+      <div class="card accent">
+        <div class="card-title"><span id="ic-tips"></span>What good looks like</div>
+        <p class="sub">The strongest 2025 proposals shared a few traits. They named a specific customer segment and the evidence that segment wants the thing. They put a number on the ask and a number on the return, with the assumptions visible. They were honest about the hardest part of execution. And they were short: most winners were well under the limit.</p>
+        <p class="sub">Reviewers in Round 1 know your business. Reviewers in Rounds 2 and 3 may not, so write so that both can follow you.</p>
+        <p class="sub" style="margin-bottom:6px">Beyond Round 1, every proposal is scored independently on five dimensions:</p>
+        <ol class="sub" style="margin:0;padding-left:18px;line-height:1.7" id="dims"></ol>
+      </div>
+      <div class="card">
+        <div class="card-title"><span id="ic-clock"></span>Deadline</div>
+        <p class="sub" id="deadline-copy"></p>
+        <p class="sub" style="margin:0">You can come back and edit your proposal any time before the deadline. After that it is locked and goes to your Operating Group reviewers.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+<div id="site-footer"></div>
+
+<script src="/js/app.js"></script>
+<script>
+(async function () {
+  await GC.loadSession();
+  GC.renderHeader('submit');
+  if (!GC.requireLogin()) return;
+  const s = GC.session;
+  const cfg = await GC.get('/api/config/public');
+  const gate = document.getElementById('gate');
+  document.getElementById('ic-tips').innerHTML = GC.icons.lightbulb;
+  document.getElementById('ic-clock').innerHTML = GC.icons.clock;
+  document.getElementById('dims').innerHTML = cfg.round2_dimensions.map((d) => `<li>${GC.esc(d.label)}</li>`).join('');
+  document.getElementById('deadline-copy').textContent = `Submissions close ${cfg.deadline_label}.`;
+  document.getElementById('deadline-pill').innerHTML = cfg.deadline_passed ? `<span class="pill red">${GC.icons.lock} Submissions closed</span>` : `<span class="pill">${GC.icons.clock} ${GC.countdown(cfg.deadline)}</span>`;
+
+  if (!s.roles.isSubmitter) {
+    gate.innerHTML = `<div class="notice warn">You are signed in as a Banyan team member, so there is no operating company to submit for. ${s.roles.isAdmin ? '<a href="/admin">Go to admin</a>.' : s.roles.raterRounds.length ? '<a href="/review">Go to review</a>.' : ''}</div>`;
+    return;
+  }
+
+  const mine = await GC.get('/api/submission/mine');
+  const sub = mine.submission;
+  const locked = cfg.deadline_passed;
+  document.getElementById('form-wrap').style.display = '';
+
+  // prefill identity
+  document.getElementById('f-name').value = s.user.name;
+  document.getElementById('f-email').value = s.user.email;
+  document.getElementById('f-opco').value = s.user.opco;
+  document.getElementById('f-group').value = s.user.operating_group;
+  const cur = document.getElementById('f-currency');
+  cur.innerHTML = cfg.currencies.map((c) => `<option value="${c}">${c}</option>`).join('');
+
+  const title = document.getElementById('f-title'), idea = document.getElementById('f-idea'), ask = document.getElementById('f-ask'), attest = document.getElementById('f-attest');
+  const counter = document.getElementById('counter'), preview = document.getElementById('usd-preview'), msg = document.getElementById('form-msg');
+  const saveBtn = document.getElementById('save'), withdrawBtn = document.getElementById('withdraw');
+
+  if (sub) {
+    document.getElementById('page-title').textContent = locked ? 'Your proposal' : 'Edit your proposal';
+    title.value = sub.title; idea.value = sub.idea; ask.value = Number(sub.capital_ask).toLocaleString('en-US'); cur.value = sub.currency; attest.checked = true;
+    document.getElementById('last-saved').textContent = `Last saved ${GC.dateTime(sub.updated_at)} · ${GC.stageLabel(sub.stage)}`;
+    saveBtn.textContent = 'Save changes';
+    if (!locked) withdrawBtn.classList.remove('hidden');
+    if (sub.email.toLowerCase() !== s.user.email.toLowerCase()) gate.innerHTML = `<div class="notice info mb-16">${GC.esc(sub.opco)} already has a proposal, submitted by <strong>${GC.esc(sub.name)}</strong>. Each operating company submits one idea; you can edit it here.</div>`;
+  }
+
+  if (locked) {
+    gate.innerHTML += `<div class="notice warn mb-16">${GC.icons.lock} The submission window closed on ${GC.esc(cfg.deadline_label)}. ${sub ? 'Your proposal is shown below for reference.' : 'No proposal was submitted for ' + GC.esc(s.user.opco) + '.'}</div>`;
+    for (const el of [title, idea, ask, cur, attest]) el.disabled = true;
+    saveBtn.classList.add('hidden');
+  }
+
+  const updateCounter = () => {
+    const n = GC.words(idea.value);
+    counter.textContent = `${n} / ${cfg.word_limit} words`;
+    counter.className = 'counter' + (n > cfg.word_limit ? ' over' : n > cfg.word_limit - 30 ? ' warn' : '');
+  };
+  const updatePreview = () => {
+    const v = parseFloat(ask.value.replace(/[^0-9.]/g, ''));
+    const rate = cfg.fx_to_usd[cur.value];
+    if (!Number.isFinite(v) || !rate) { preview.textContent = 'Enter the total you are requesting.'; return; }
+    preview.textContent = cur.value === 'USD' ? `${GC.money(v, 'USD')} requested.` : `≈ ${GC.money(v * rate, 'USD')} USD at an indicative rate of ${rate}.`;
+  };
+  idea.addEventListener('input', updateCounter); ask.addEventListener('input', updatePreview); cur.addEventListener('change', updatePreview);
+  ask.addEventListener('blur', () => { const v = parseFloat(ask.value.replace(/[^0-9.]/g, '')); if (Number.isFinite(v)) ask.value = v.toLocaleString('en-US'); });
+  updateCounter(); updatePreview();
+
+  document.getElementById('form').addEventListener('submit', async (e) => {
+    e.preventDefault(); msg.innerHTML = '';
+    saveBtn.disabled = true;
+    try {
+      const r = await GC.api('POST', '/api/submission', { title: title.value, idea: idea.value, currency: cur.value, capital_ask: ask.value, attest: attest.checked });
+      msg.innerHTML = `<div class="notice ok">${GC.icons.checkCircle} <strong>${sub ? 'Changes saved.' : 'Proposal submitted.'}</strong> ${GC.esc(r.submission.opco)} is in for the 2026 Growth Challenge. You can edit until ${GC.esc(cfg.deadline_label)}.</div>`;
+      document.getElementById('last-saved').textContent = `Last saved ${GC.dateTime(r.submission.updated_at)}`;
+      saveBtn.textContent = 'Save changes'; withdrawBtn.classList.remove('hidden');
+      GC.toast(sub ? 'Saved' : 'Submitted');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) { msg.innerHTML = `<div class="notice err">${GC.esc(err.message)}</div>`; }
+    saveBtn.disabled = false;
+  });
+
+  withdrawBtn.addEventListener('click', async () => {
+    if (!confirm('Withdraw this proposal? You can submit a new one before the deadline.')) return;
+    try { await GC.api('DELETE', '/api/submission/mine'); location.href = '/'; } catch (err) { GC.toast(err.message, true); }
+  });
+})();
+</script>
+</body>
+</html>

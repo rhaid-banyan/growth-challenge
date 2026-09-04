@@ -1,0 +1,15 @@
+{
+  "name": "banyan-growth-challenge-portal",
+  "version": "0.1.0",
+  "description": "Banyan 2026 Growth Challenge: submission and blind-scoring portal (standalone mock-up)",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node scripts/seed.js",
+    "reseed": "node scripts/seed.js --force",
+    "test": "node scripts/smoke-test.js"
+  },
+  "engines": { "node": ">=18" },
+  "license": "UNLICENSED"
+}

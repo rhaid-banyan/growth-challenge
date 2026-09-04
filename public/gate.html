@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banyan 2026 Growth Challenge</title>
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/app.css">
+<style>
+  .gate-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .gate { background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--moss); border-radius: 8px; padding: 36px 40px; width: 100%; max-width: 440px; }
+  .gate img { height: 36px; display: block; margin-bottom: 22px; }
+</style>
+</head>
+<body>
+<main class="gate-wrap">
+  <form class="gate" id="gate-form">
+    <img src="/img/banyan-logo.png" alt="Banyan Software">
+    <div class="eyebrow">Banyan Business Portal</div>
+    <h1 style="font-size:26px;margin-bottom:8px">2026 Growth Challenge</h1>
+    <p class="sub" style="margin-bottom:20px">This preview is limited to the Banyan team. Enter the access password to continue.</p>
+    <label class="field"><span class="lbl">Access password</span><input type="password" id="pw" autocomplete="current-password" autofocus></label>
+    <div class="row between"><span class="small" id="msg" style="color:var(--red)"></span><button type="submit" class="btn">Continue</button></div>
+  </form>
+</main>
+<script src="/js/app.js"></script>
+<script>
+(function () {
+  const next = GC.qs('next') || '/';
+  document.getElementById('gate-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('msg'); msg.textContent = '';
+    try { await GC.api('POST', '/api/gate', { password: document.getElementById('pw').value }); location.href = next.startsWith('/') ? next : '/'; }
+    catch (err) { msg.textContent = err.message; }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+{
+  "challenge_name": "Banyan 2026 Growth Challenge",
+  "total_fund_usd": 3000000,
+  "word_limit": 300,
+  "deadline": "2026-10-02T23:59:00-04:00",
+  "deadline_label": "Friday, October 2, 2026 · 11:59 PM ET",
+  "deadline_tz": "America/New_York",
+  "key_dates": [
+    {
+      "date": "2026-10-02",
+      "label": "Deadline for submissions",
+      "detail": "11:59 PM ET"
+    },
+    {
+      "date": "2026-10-13",
+      "label": "Round 1 and Round 2 reviews complete",
+      "detail": ""
+    },
+    {
+      "date": "2026-10-21",
+      "label": "Deadline for additional detail from CEOs",
+      "detail": "Only if requested; we will reach out separately"
+    },
+    {
+      "date": "2026-10-26",
+      "label": "Allocations and winners finalized",
+      "detail": "Announcements made"
+    },
+    {
+      "date": "2026-11-09",
+      "label": "Budgets locked",
+      "detail": ""
+    }
+  ],
+  "operating_groups": [
+    "UK and RoE",
+    "MIU",
+    "GovTech",
+    "EdTech",
+    "Healthcare",
+    "ANZ",
+    "Transportation, Logistics, and Longtail",
+    "Financial Services",
+    "Media and Communications",
+    "DACH"
+  ],
+  "currencies": [
+    "USD",
+    "CAD",
+    "NZD",
+    "AUD",
+    "BRL",
+    "GBP",
+    "EUR"
+  ],
+  "fx_to_usd": {
+    "USD": 1,
+    "CAD": 0.72,
+    "NZD": 0.59,
+    "AUD": 0.65,
+    "BRL": 0.18,
+    "GBP": 1.35,
+    "EUR": 1.16
+  },
+  "admins": [
+    {
+      "email": "rhaid@banyansoftware.com",
+      "name": "Ryan Haid",
+      "title": "Chief of Staff"
+    },
+    {
+      "email": "ajarzebowicz@banyansoftware.com",
+      "name": "Alex Jarzebowicz",
+      "title": ""
+    }
+  ],
+  "rounds": {
+    "1": {
+      "name": "Operating Group",
+      "status": "open",
+      "advance_per_group": 2,
+      "reveal_scores": false,
+      "raters": [
+        {
+          "email": "dharris@banyansoftware.com",
+          "name": "Darren Harris",
+          "title": "Group President, Healthcare and EdTech",
+          "groups": [
+            "Healthcare",
+            "EdTech"
+          ]
+        },
+        {
+          "email": "acole@banyansoftware.com",
+          "name": "Adam Cole",
+          "title": "Portfolio Leader, Healthcare",
+          "groups": [
+            "Healthcare"
+          ]
+        },
+        {
+          "email": "owreford@banyansoftware.com",
+          "name": "Oliver Wreford",
+          "title": "Portfolio Leader, EdTech",
+          "groups": [
+            "EdTech"
+          ]
+        },
+        {
+          "email": "tprendiville@banyansoftware.com",
+          "name": "Tom Prendiville",
+          "title": "Chief of Staff, EdTech",
+          "groups": [
+            "EdTech"
+          ]
+        },
+        {
+          "email": "vmatheus@banyansoftware.com",
+          "name": "Valentina Matheus",
+          "title": "Chief of Staff, Healthcare",
+          "groups": [
+            "Healthcare"
+          ]
+        },
+        {
+          "email": "tjordan@banyansoftware.com",
+          "name": "Tristan Jordan",
+          "title": "OP, Transportation and Financial Services",
+          "groups": [
+            "Transportation, Logistics, and Longtail",
+            "Financial Services"
+          ]
+        },
+        {
+          "email": "sburgess@banyansoftware.com",
+          "name": "Scott Burgess",
+          "title": "Portfolio Leader, Transportation",
+          "groups": [
+            "Transportation, Logistics, and Longtail"
+          ]
+        },
+        {
+          "email": "akrushnakumaar@banyansoftware.com",
+          "name": "Amrith Krushnakumaar",
+          "title": "Chief of Staff, Financial Services",
+          "groups": [
+            "Financial Services"
+          ]
+        },
+        {
+          "email": "bzakrzewski@banyansoftware.com",
+          "name": "Bridget Zakrzewski",
+          "title": "Chief of Staff, Transportation",
+          "groups": [
+            "Transportation, Logistics, and Longtail"
+          ]
+        },
+        {
+          "email": "asrinivasan@banyansoftware.com",
+          "name": "Arun Srinivasan",
+          "title": "Group President, MIU and GovTech",
+          "groups": [
+            "MIU",
+            "GovTech"
+          ]
+        },
+        {
+          "email": "sryczek@banyansoftware.com",
+          "name": "Stephen Ryczek",
+          "title": "Portfolio Leader, GovTech",
+          "groups": [
+            "GovTech"
+          ]
+        },
+        {
+          "email": "crollins@banyansoftware.com",
+          "name": "Claire Rollins",
+          "title": "Portfolio Leader, UK and RoE",
+          "groups": [
+            "UK and RoE"
+          ]
+        },
+        {
+          "email": "jkoegenboeg@banyansoftware.com",
+          "name": "Julie Koegenboeg",
+          "title": "Portfolio Leader, UK and RoE",
+          "groups": [
+            "UK and RoE"
+          ]
+        },
+        {
+          "email": "hhunter@banyansoftware.com",
+          "name": "Henry Hunter",
+          "title": "Chief of Staff, UK and RoE",
+          "groups": [
+            "UK and RoE"
+          ]
+        },
+        {
+          "email": "ebrookman@banyansoftware.com",
+          "name": "Erleyene Brookman",
+          "title": "Portfolio Leader, UK and RoE",
+          "groups": [
+            "UK and RoE"
+          ]
+        },
+        {
+          "email": "mpardo@banyansoftware.com",
+          "name": "Maria Lucia Pardo",
+          "title": "Chief of Staff, UK and RoE",
+          "groups": [
+            "UK and RoE"
+          ]
+        },
+        {
+          "email": "kingo@banyansoftware.com",
+          "name": "Kay Ingo",
+          "title": "Group President, DACH",
+          "groups": [
+            "DACH"
+          ]
+        },
+        {
+          "email": "rfawell@banyansoftware.com",
+          "name": "Reed Fawell",
+          "title": "Group President, Communications and Longtail",
+          "groups": [
+            "Media and Communications"
+          ]
+        },
+        {
+          "email": "shendrick@banyansoftware.com",
+          "name": "Susie Hendrick",
+          "title": "Portfolio Leader, Communications and Longtail",
+          "groups": [
+            "Media and Communications"
+          ]
+        },
+        {
+          "email": "rsalisbury@banyansoftware.com",
+          "name": "Ryan Salisbury",
+          "title": "Chief of Staff, Communications and Longtail",
+          "groups": [
+            "Media and Communications"
+          ]
+        },
+        {
+          "email": "jdipaolo@banyansoftware.com",
+          "name": "Jordan Di Paolo",
+          "title": "Chief of Staff, Communications and Longtail",
+          "groups": [
+            "Media and Communications"
+          ]
+        },
+        {
+          "email": "dbrice@banyansoftware.com",
+          "name": "David Brice",
+          "title": "Group President, APAC",
+          "groups": [
+            "ANZ"
+          ]
+        }
+      ]
+    },
+    "2": {
+      "name": "Semifinalists",
+      "status": "pending",
+      "advance_top_n": 10,
+      "reveal_scores": false,
+      "raters": [
+        {
+          "email": "rhaid@banyansoftware.com",
+          "name": "Ryan Haid",
+          "title": "Chief of Staff",
+          "groups": []
+        },
+        {
+          "email": "ajarzebowicz@banyansoftware.com",
+          "name": "Alex Jarzebowicz",
+          "title": "",
+          "groups": []
+        },
+        {
+          "email": "mhammerle@banyansoftware.com",
+          "name": "Melissa Hammerle",
+          "title": "President, Portfolio",
+          "groups": []
+        },
+        {
+          "email": "lreimer@banyansoftware.com",
+          "name": "Luke Reimer",
+          "title": "S&M Operating Partner",
+          "groups": []
+        }
+      ]
+    },
+    "3": {
+      "name": "Finalists",
+      "status": "pending",
+      "reveal_scores": false,
+      "raters": [
+        {
+          "email": "rhaid@banyansoftware.com",
+          "name": "Ryan Haid",
+          "title": "Chief of Staff",
+          "groups": []
+        },
+        {
+          "email": "ajarzebowicz@banyansoftware.com",
+          "name": "Alex Jarzebowicz",
+          "title": "",
+          "groups": []
+        },
+        {
+          "email": "tcross@banyansoftware.com",
+          "name": "Tonya Cross",
+          "title": "COO",
+          "groups": []
+        },
+        {
+          "email": "dberkal@banyansoftware.com",
+          "name": "David Berkal",
+          "title": "CEO",
+          "groups": []
+        }
+      ]
+    }
+  },
+  "round2_dimensions": [
+    {
+      "key": "d1",
+      "label": "Clear vision for value creation"
+    },
+    {
+      "key": "d2",
+      "label": "Market signals and customer feedback"
+    },
+    {
+      "key": "d3",
+      "label": "Clear ROI within 12 months"
+    },
+    {
+      "key": "d4",
+      "label": "Asymmetric upside potential"
+    },
+    {
+      "key": "d5",
+      "label": "Execution risk (5 = low risk)"
+    }
+  ]
+}

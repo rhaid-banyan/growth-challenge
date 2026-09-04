@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banyan 2026 Growth Challenge</title>
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div id="site-header"></div>
+<main>
+<div class="container">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow" id="hello-eyebrow">Banyan Business Portal · 2026 Growth Challenge</div>
+      <h1>Banyan 2026 Growth Challenge</h1>
+    </div>
+    <div id="head-cta"></div>
+  </div>
+
+  <div class="stats mb-24">
+    <div class="label-block"><div class="eyebrow">At a glance</div><div class="hint">This year's challenge in numbers</div></div>
+    <div class="stat"><div class="value" id="stat-fund">$3M</div><div class="name">Total funding</div></div>
+    <div class="stat"><div class="value" id="stat-deadline">Oct 2</div><div class="name">Deadline</div></div>
+    <div class="stat"><div class="value" id="stat-words">300</div><div class="name">Word limit</div></div>
+    <div class="stat"><div class="value">1</div><div class="name">Submission per OpCo</div></div>
+  </div>
+
+  <div class="grid side">
+    <div>
+      <div class="hero">
+        <div class="deco"></div><div class="deco two"></div>
+        <div style="position:relative;max-width:640px">
+          <div class="eyebrow sky">Banyan 2026 Growth Challenge</div>
+          <h2>$3M to change the trajectory of your business</h2>
+          <p>Every Banyan operating company can pitch one idea: a new product, market, channel or capability that would unlock growth you cannot reach on your current plan. Banyan will fund the strongest proposals from a $3M pool, and the money sits outside your OpEx budget and bonus calculations so it does not compete with the business you already run. Tell us what you would build, how you would execute it, what it costs, which market it opens, and what it returns within 12 months.</p>
+          <div class="row" style="gap:20px">
+            <a class="btn light" href="/submit" id="hero-cta">Submit your idea</a>
+            <span class="meta" id="hero-countdown"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <div><div class="eyebrow">Your proposal</div><h2>What to include in 300 words</h2></div>
+      </div>
+      <div class="card" style="padding:8px 24px">
+        <div class="checklist">
+          <div class="check-row"><span class="tile lg" id="ic-1"></span><div><h3>The idea</h3><div class="sub">What are you proposing to build, launch, or change? Say it plainly, in one or two sentences a CEO in another vertical would understand.</div></div></div>
+          <div class="check-row"><span class="tile lg" id="ic-2"></span><div><h3>Execution plan</h3><div class="sub">Who does the work, what happens in the first 90 days, and what has to be true for it to succeed. Name the biggest risk.</div></div></div>
+          <div class="check-row"><span class="tile lg" id="ic-3"></span><div><h3>Specific capital ask</h3><div class="sub">A number, in your currency, with a rough breakdown of where it goes. Awarded funding is excluded from your OpEx budget and bonus calculations.</div></div></div>
+          <div class="check-row"><span class="tile lg" id="ic-4"></span><div><h3>New or incremental market unlock</h3><div class="sub">Which customers, segment, geography or product line does this open up that you cannot reach today? What signal tells you they want it?</div></div></div>
+          <div class="check-row"><span class="tile lg" id="ic-5"></span><div><h3>ROI potential within 12 months</h3><div class="sub">Show the math: incremental ARR, margin, or cost avoided against the ask. A credible, specific estimate with visible assumptions beats a large round number.</div></div></div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <div><div class="eyebrow">Process</div><h2>How proposals are judged</h2></div>
+      </div>
+      <div class="timeline" id="timeline">
+        <div class="step" id="step-0"><div class="n">Step 1</div><div class="t">Submit</div><div class="d">One 300-word proposal per operating company through this portal, by <strong id="tl-deadline">Friday, October 2</strong>.</div></div>
+        <div class="step" id="step-1"><div class="n">Round 1</div><div class="t">Operating Group</div><div class="d">Your Group President, Portfolio Leader and Chief of Staff each rate every proposal in the group 1 to 5. The top 2 per Operating Group advance.</div></div>
+        <div class="step" id="step-2"><div class="n">Round 2</div><div class="t">Semifinalists</div><div class="d">Roughly 20 proposals scored independently across five dimensions: vision for value creation, market signals, 12-month ROI, asymmetric upside, and execution risk. About 10 advance.</div></div>
+        <div class="step" id="step-3"><div class="n">Round 3</div><div class="t">Finalists</div><div class="d">Banyan leadership may request additional detail from CEOs, then allocates the $3M across the strongest proposals based on the ask, size of opportunity and business performance.</div></div>
+      </div>
+
+      <div class="card mt-24" style="border-left:4px solid var(--sky)">
+        <div class="card-title" id="ct-write"><span></span>Write it yourself</div>
+        <p class="sub" style="margin:0">We are reading for judgment, not polish. Three hundred words is enough to show you understand the customer, the economics and the risk. Proposals that read like they were generated rather than thought through will not do well with the reviewers, many of whom know your business. Use AI to sharpen your thinking if you like, but make sure every claim is one you would defend in the room.</p>
+      </div>
+    </div>
+
+    <aside>
+      <div class="card" id="status-card">
+        <div class="card-title"><span id="ic-status"></span>Your status</div>
+        <div id="status-body" class="sub">Loading...</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span id="ic-cal"></span>Key dates</div>
+        <div id="key-dates"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span id="ic-fund"></span>What's at stake</div>
+        <p class="sub">Banyan is committing <strong>$3,000,000</strong> across the winning proposals. Awards are excluded from your OpEx budget and bonus plan calculations for the funded period, and funded teams get Banyan support with execution planning, resourcing and knowledge sharing across the portfolio.</p>
+        <p class="sub" style="margin:0">Capital asks can be entered in USD, CAD, NZD, AUD, BRL, GBP or EUR; we normalise to USD for comparison.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span id="ic-q"></span>Questions</div>
+        <p class="sub" style="margin:0">Reach out to your Group President or the Banyan team through the portal's <a href="https://portal.banyansoftware.io/" target="_blank" rel="noopener">Ask the Banyan Team</a> button.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+<div id="site-footer"></div>
+
+<script src="/js/app.js"></script>
+<script>
+(async function () {
+  await GC.loadSession();
+  GC.renderHeader('home');
+  const s = GC.session;
+  const cfg = await GC.get('/api/config/public');
+
+  // icons
+  const set = (id, ic) => { const el = document.getElementById(id); if (el) el.innerHTML = GC.icons[ic]; };
+  set('ic-1', 'lightbulb'); set('ic-2', 'layers'); set('ic-3', 'dollar'); set('ic-4', 'globe'); set('ic-5', 'trending');
+  set('ic-status', 'fileText'); set('ic-cal', 'calendar'); set('ic-fund', 'target'); set('ic-q', 'users');
+  document.querySelector('#ct-write span').innerHTML = GC.icons.pen;
+
+  document.getElementById('stat-fund').textContent = GC.usdShort(cfg.total_fund_usd);
+  document.getElementById('stat-words').textContent = cfg.word_limit;
+  document.getElementById('stat-deadline').textContent = GC.date(cfg.deadline, { month: 'short', day: 'numeric' }, cfg.deadline_tz);
+  document.getElementById('tl-deadline').textContent = GC.date(cfg.deadline, { weekday: 'long', month: 'long', day: 'numeric' }, cfg.deadline_tz);
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById('key-dates').innerHTML = (cfg.key_dates || []).map((k, i) => {
+    const d = new Date(k.date + 'T12:00:00Z'); const past = k.date < today;
+    return `<div class="list-row" style="${i === 0 ? 'border-top:0' : ''}"><div class="tile lg" style="flex-direction:column;line-height:1;${past ? 'background:var(--line-2);color:var(--text-2)' : ''}"><span style="font-weight:600;font-size:11px;letter-spacing:.05em">${d.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' }).toUpperCase()}</span><span style="font-family:var(--font-heading);font-weight:600;font-size:21px;margin-top:2px">${d.getUTCDate()}</span></div><div style="min-width:0"><div style="font-weight:600;font-size:14.5px;color:var(--ink)">${GC.esc(k.label)}</div><div class="small muted">${d.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' })}${k.detail ? ' · ' + GC.esc(k.detail) : ''}</div></div></div>`;
+  }).join('');
+  document.getElementById('hero-countdown').textContent = cfg.deadline_passed ? 'Submissions closed ' + GC.date(cfg.deadline, null, cfg.deadline_tz) : GC.countdown(cfg.deadline) + ' · closes ' + GC.date(cfg.deadline, { month: 'short', day: 'numeric' }, cfg.deadline_tz);
+
+  // current step highlight
+  const openRound = ['1', '2', '3'].find((r) => cfg.rounds[r].status === 'open');
+  document.getElementById(openRound ? 'step-' + openRound : (cfg.deadline_passed ? 'step-1' : 'step-0')).classList.add('now');
+
+  if (s.user) document.getElementById('hello-eyebrow').textContent = `Your Banyan portal · ${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}`;
+
+  const headCta = document.getElementById('head-cta');
+  const heroCta = document.getElementById('hero-cta');
+  const statusBody = document.getElementById('status-body');
+
+  if (!s.user) {
+    headCta.innerHTML = `<a class="btn" href="/login?next=%2Fsubmit">Sign in to submit ${GC.icons.arrowRight}</a>`;
+    heroCta.href = '/login?next=%2Fsubmit'; heroCta.innerHTML = `Sign in to submit ${GC.icons.arrowRight}`;
+    statusBody.innerHTML = `Sign in with your Banyan Business Portal account to submit on behalf of your operating company. Your name, company and Operating Group are filled in automatically.<div class="mt-16"><a class="btn outline sm" href="/login?next=%2Fsubmit">Sign in</a></div>`;
+    return;
+  }
+
+  const r = s.roles;
+  if (r.isSubmitter) {
+    const mine = await GC.get('/api/submission/mine');
+    const sub = mine.submission;
+    if (sub) {
+      headCta.innerHTML = cfg.deadline_passed ? `<a class="btn outline" href="/submit">View your proposal</a>` : `<a class="btn" href="/submit">${GC.icons.edit} Edit your proposal</a>`;
+      heroCta.href = '/submit'; heroCta.innerHTML = (cfg.deadline_passed ? 'View your proposal ' : 'Edit your proposal ') + GC.icons.arrowRight;
+      statusBody.innerHTML = `<div class="row" style="margin-bottom:10px"><span class="pill">${GC.icons.checkCircle} Submitted</span><span class="small muted">${GC.dateTime(sub.updated_at)}</span></div>
+        <div style="font-weight:600;color:var(--ink);font-size:15px">${GC.esc(sub.title)}</div>
+        <div class="small muted" style="margin:4px 0 10px">${GC.esc(sub.opco)} · ${GC.esc(sub.operating_group)} · ${GC.money(sub.capital_ask, sub.currency)} ${GC.esc(sub.currency)}</div>
+        ${cfg.deadline_passed ? '<div class="small muted">The deadline has passed; your proposal is with the reviewers.</div>' : `<div class="small muted">You can edit until ${GC.esc(cfg.deadline_label)}.</div>`}`;
+    } else {
+      headCta.innerHTML = cfg.deadline_passed ? '' : `<a class="btn" href="/submit">Submit your idea ${GC.icons.arrowRight}</a>`;
+      heroCta.innerHTML = 'Submit your idea ' + GC.icons.arrowRight;
+      statusBody.innerHTML = cfg.deadline_passed
+        ? `<span class="pill grey">No proposal</span><div class="mt-8">The submission window closed on ${GC.date(cfg.deadline, null, cfg.deadline_tz)}.</div>`
+        : `<span class="pill grey">Not yet submitted</span><div class="mt-8">Signed in as <strong>${GC.esc(s.user.name)}</strong> for <strong>${GC.esc(s.user.opco)}</strong> (${GC.esc(s.user.operating_group)}). One proposal per operating company.</div><div class="mt-16"><a class="btn sm" href="/submit">Start your proposal</a></div>`;
+    }
+  } else {
+    const bits = [];
+    if (r.raterRounds.length) bits.push(`You are a reviewer in ${r.raterRounds.map((x) => 'Round ' + x).join(', ')}.`);
+    if (r.isAdmin) bits.push('You have admin access to the pipeline, rounds and exports.');
+    headCta.innerHTML = r.isAdmin ? `<a class="btn" href="/admin">Open admin ${GC.icons.arrowRight}</a>` : `<a class="btn" href="/review">Open review ${GC.icons.arrowRight}</a>`;
+    heroCta.href = r.isAdmin ? '/admin' : '/review'; heroCta.innerHTML = (r.isAdmin ? 'Open admin ' : 'Open review ') + GC.icons.arrowRight;
+    statusBody.innerHTML = `<span class="pill sky">Banyan</span><div class="mt-8">${bits.join(' ') || 'You are signed in as a Banyan viewer.'}</div>`;
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Banyan 2026 Growth Challenge</title>
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/app.css">
+<style>
+  .modal-bg { position: fixed; inset: 0; background: rgba(30,40,34,.45); z-index: 100; display: flex; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+  .modal { background: #fff; border-radius: 8px; width: 100%; max-width: 1040px; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+  .modal .m-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 22px 26px 16px; border-bottom: 1px solid var(--line-2); }
+  .modal .m-body { padding: 22px 26px; }
+  .modal .close { background: none; border: 0; cursor: pointer; color: var(--text-3); padding: 4px; }
+  .modal .close:hover { color: var(--moss); }
+  .rater-row { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: start; padding: 8px 0; border-top: 1px solid var(--line-2); font-size: 13.5px; }
+  .rater-row:first-child { border-top: 0; }
+  .dims-mini { display: inline-flex; gap: 4px; margin-left: 8px; }
+  .dims-mini span { display: inline-flex; width: 20px; height: 20px; border-radius: 4px; background: var(--line-2); font-size: 11px; font-weight: 600; align-items: center; justify-content: center; color: var(--text-2); }
+  .stage-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 200px; }
+  .stage-actions .wide { grid-column: 1 / -1; display: grid; }
+  .stage-actions .btn { width: 100%; justify-content: center; white-space: nowrap; }
+  .stage-actions.two { grid-template-columns: 1fr 1fr; }
+  .alloc-input { width: 130px; text-align: right; padding: 6px 8px; font-size: 14px; }
+  .setting-block { padding: 18px 0; border-top: 1px solid var(--line-2); }
+  .setting-block:first-child { border-top: 0; padding-top: 0; }
+  .rater-edit { display: grid; grid-template-columns: 1.2fr 1fr 2fr auto; gap: 8px; align-items: center; padding: 6px 0; }
+  .rater-edit input { padding: 7px 10px; font-size: 14px; }
+  @media (max-width: 900px) { .rater-edit { grid-template-columns: 1fr; } }
+  td .idea-preview { color: var(--text-2); font-size: 13px; max-width: 420px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main>
+<div class="container">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">2026 Growth Challenge</div>
+      <h1 style="font-size:36px">Admin</h1>
+    </div>
+    <div class="row" id="head-actions"></div>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div id="body"></div>
+</div>
+</main>
+<div id="site-footer"></div>
+<div id="modal-root"></div>
+
+<script src="/js/app.js"></script>
+<script>
+(async function () {
+  await GC.loadSession();
+  GC.renderHeader('admin');
+  if (!GC.requireLogin()) return;
+  const body = document.getElementById('body');
+  if (!GC.session.roles.isAdmin) { document.getElementById('tabs').remove(); body.innerHTML = '<div class="notice warn">Admin access is limited to the challenge administrators listed in the configuration.</div>'; return; }
+
+  const TABS = [
+    { key: 'overview', label: 'Overview' },
+    { key: 'round1', label: 'Round 1' },
+    { key: 'round2', label: 'Round 2' },
+    { key: 'round3', label: 'Round 3 · Allocation' },
+    { key: 'funded', label: 'Funded' },
+    { key: 'eliminated', label: 'Eliminated' },
+    { key: 'people', label: 'Reviewers' },
+    { key: 'settings', label: 'Settings' },
+  ];
+  let tab = GC.qs('tab') || 'overview';
+  let cfg = await GC.get('/api/admin/config');
+  const E = GC.esc;
+
+  document.getElementById('head-actions').innerHTML = `
+    <a class="btn outline sm" href="/api/admin/export/results">${GC.icons.download} Results CSV</a>
+    <a class="btn outline sm" href="/api/admin/export/submissions">${GC.icons.download} Submissions</a>
+    <a class="btn outline sm" href="/api/admin/export/scores">${GC.icons.download} Scores</a>`;
+
+  function renderTabs(counts) {
+    document.getElementById('tabs').innerHTML = TABS.map((t) => `<button class="${t.key === tab ? 'on' : ''}" data-tab="${t.key}">${t.label}${counts && counts[t.key] !== undefined ? ` <span class="pill-count" style="${t.key === tab ? '' : 'background:#c7cdc9'}">${counts[t.key]}</span>` : ''}</button>`).join('');
+    document.querySelectorAll('#tabs button').forEach((b) => b.addEventListener('click', () => { tab = b.dataset.tab; history.replaceState(null, '', '?tab=' + tab); render(); }));
+  }
+
+  const chip = (v, hi) => v === null || v === undefined ? '<span class="score-chip empty">-</span>' : `<span class="score-chip ${hi ? 'hi' : ''}">${GC.score(v)}</span>`;
+  const statusPill = (s) => `<span class="pill ${s === 'open' ? '' : s === 'closed' ? 'grey' : 'amber'}" style="font-size:11px">${s}</span>`;
+
+  async function render() {
+    const ov = await GC.get('/api/admin/overview');
+    const counts = { round1: ov.stages.round1 || 0, round2: ov.stages.round2 || 0, round3: ov.stages.round3 || 0, funded: ov.stages.funded || 0, eliminated: ov.stages.eliminated || 0 };
+    renderTabs(counts);
+    if (tab === 'overview') return renderOverview(ov);
+    if (tab === 'settings') return renderSettings();
+    if (tab === 'people') return renderPeople();
+    return renderStage(tab, ov);
+  }
+
+  // ------------------------------------------------------------ overview
+  function renderOverview(ov) {
+    const pct = Math.min(100, Math.round((ov.awarded_usd / ov.total_fund_usd) * 100));
+    const groupRows = ov.by_group.sort((a, b) => b.submissions - a.submissions).map((g) => `<tr><td class="title-cell">${E(g.group)}</td><td class="num">${g.submissions}</td><td class="num">${g.round1 || 0}</td><td class="num">${g.round2 || 0}</td><td class="num">${g.round3 || 0}</td><td class="num">${g.funded || 0}</td><td class="num">${g.eliminated || 0}</td><td class="num">${GC.usd(g.ask_usd)}</td><td class="num">${g.awarded_usd ? GC.usd(g.awarded_usd) : '-'}</td></tr>`).join('');
+    const roundCards = [1, 2, 3].map((r) => {
+      const rd = cfg.rounds[r];
+      const prog = ov.rater_progress[r] || [];
+      return `<div class="card tight">
+        <div class="row between mb-8"><div><div class="eyebrow" style="margin-bottom:2px">Round ${r}</div><h3 style="font-size:16px">${E(rd.name)}</h3></div>${statusPill(rd.status)}</div>
+        <div class="row mb-8" style="gap:6px">
+          ${rd.status !== 'open' ? `<button class="btn xs" data-round-status="${r}:open">Open round</button>` : `<button class="btn xs outline" data-round-status="${r}:closed">Close round</button>`}
+          ${rd.status === 'closed' ? `<button class="btn xs ghost" data-round-status="${r}:pending">Reset to pending</button>` : ''}
+          <button class="btn xs ghost" data-reveal="${r}">${rd.reveal_scores ? 'Hide panel scores from raters' : 'Reveal panel scores to raters'}</button>
+        </div>
+        <div class="small muted mb-8">${ov.stages['round' + r] || 0} proposals in round · ${prog.length} raters</div>
+        <div class="rater-list">${prog.map((p) => `<div class="list-row" style="padding:6px 0"><span class="avatar muted" style="width:26px;height:26px;font-size:11px">${E(GC.initials(p.name || p.email))}</span><span class="small" style="flex:1"><strong>${E(p.name || p.email)}</strong>${p.groups.length ? `<br><span class="muted">${p.groups.map(E).join(', ')}</span>` : ''}</span><span class="small muted">${p.done}/${p.total}</span><span class="progress" style="width:70px"><span style="width:${p.total ? Math.round((p.done / p.total) * 100) : 0}%"></span></span></div>`).join('') || '<div class="small muted">No raters assigned; add them on the Reviewers tab.</div>'}</div>
+      </div>`;
+    }).join('');
+
+    body.innerHTML = `
+      <div class="stats mb-24">
+        <div class="label-block"><div class="eyebrow">Pipeline</div><div class="hint">${ov.deadline_passed ? 'Submissions closed' : 'Submissions open until ' + GC.date(ov.deadline, null, cfg.deadline_tz)}</div></div>
+        <div class="stat"><div class="value">${ov.total}</div><div class="name">Proposals</div></div>
+        <div class="stat"><div class="value">${ov.stages.round1 || 0}</div><div class="name">In Round 1</div></div>
+        <div class="stat"><div class="value">${ov.stages.round2 || 0}</div><div class="name">In Round 2</div></div>
+        <div class="stat"><div class="value">${ov.stages.round3 || 0}</div><div class="name">In Round 3</div></div>
+        <div class="stat"><div class="value">${ov.stages.funded || 0}</div><div class="name">Funded</div></div>
+        <div class="stat"><div class="value">${GC.usdShort(ov.awarded_usd)}</div><div class="name">of ${GC.usdShort(ov.total_fund_usd)} allocated</div><div class="progress mt-8"><span style="width:${pct}%"></span></div></div>
+      </div>
+      <div class="grid cols-3 mb-24">${roundCards}</div>
+      <div class="card">
+        <div class="card-title"><span>${GC.icons.layers}</span>By Operating Group</div>
+        <div class="table-wrap"><table class="data"><thead><tr><th>Operating Group</th><th class="num">Submitted</th><th class="num">R1</th><th class="num">R2</th><th class="num">R3</th><th class="num">Funded</th><th class="num">Out</th><th class="num">Total ask (USD)</th><th class="num">Awarded</th></tr></thead><tbody>${groupRows}</tbody></table></div>
+        ${ov.withdrawn ? `<div class="small muted mt-8">${GC.plural(ov.withdrawn, 'withdrawn proposal')} not shown.</div>` : ''}
+      </div>`;
+    body.querySelectorAll('[data-round-status]').forEach((b) => b.addEventListener('click', async () => { const [r, s] = b.dataset.roundStatus.split(':'); cfg.rounds[r].status = s; await saveCfg(); render(); }));
+    body.querySelectorAll('[data-reveal]').forEach((b) => b.addEventListener('click', async () => { const r = b.dataset.reveal; cfg.rounds[r].reveal_scores = !cfg.rounds[r].reveal_scores; await saveCfg(); render(); }));
+  }
+
+  async function saveCfg() { try { const r = await GC.api('PUT', '/api/admin/config', cfg); cfg = r.config; GC.toast('Settings saved'); } catch (e) { GC.toast(e.message, true); } }
+
+  // ------------------------------------------------------------ stage tables
+  // Sort state persists per tab while the page is open. Default: composite, high to low.
+  const sortState = {};
+  function sortFor(stage) {
+    if (!sortState[stage]) sortState[stage] = { key: stage === 'funded' ? 'award' : stage === 'eliminated' ? 'group' : 'composite', dir: stage === 'eliminated' ? 'asc' : 'desc' };
+    return sortState[stage];
+  }
+
+  async function renderStage(stage, ov) {
+    const data = await GC.get('/api/admin/proposals?stage=' + stage);
+    const items = data.items;
+    const roundOf = { round1: 1, round2: 2, round3: 3 }[stage];
+    const nextStage = { round1: 'round2', round2: 'round3', round3: 'funded' }[stage];
+    const sort = sortFor(stage);
+
+    // values used for sorting
+    const val = (it, key) => {
+      switch (key) {
+        case 'composite': return roundOf ? it.rounds[roundOf].composite : it.rounds[3].composite ?? it.rounds[2].composite;
+        case 'r1': return it.rounds[1].composite; case 'r2': return it.rounds[2].composite; case 'r3': return it.rounds[3].composite;
+        case 'raters': return roundOf ? it.rounds[roundOf].n : 0;
+        case 'ask': return Number(it.capital_ask_usd) || 0;
+        case 'award': return Number(it.award_usd) || 0;
+        case 'rec': return it.rounds[3].avg_award_usd || 0;
+        case 'group': return it.operating_group; case 'title': return it.title; case 'opco': return it.opco;
+        case 'elim': return Number(it.eliminated_in) || 0;
+        default: return null;
+      }
+    };
+    items.sort((a, b) => {
+      let av = val(a, sort.key), bv = val(b, sort.key);
+      if (typeof av === 'string' || typeof bv === 'string') { const c = String(av || '').localeCompare(String(bv || '')); return sort.dir === 'asc' ? c : -c; }
+      if (av === null || av === undefined) return 1; if (bv === null || bv === undefined) return -1;
+      const c = av - bv; return sort.dir === 'asc' ? c : -c;
+    });
+    // secondary: keep unscored at the bottom regardless of direction when sorting by a score
+    if (['composite', 'r1', 'r2', 'r3'].includes(sort.key)) { const scored = items.filter((i) => val(i, sort.key) !== null && val(i, sort.key) !== undefined); const un = items.filter((i) => !scored.includes(i)); items.splice(0, items.length, ...scored, ...un); }
+
+    const th = (key, label, num) => `<th class="${num ? 'num' : ''} sortable ${sort.key === key ? 'on' : ''}" data-sort="${key}">${label}${sort.key === key ? (sort.dir === 'desc' ? ' ▾' : ' ▴') : ''}</th>`;
+
+    let toolbar = '';
+    if (stage === 'round1') toolbar = `<div class="small muted">Rank is within Operating Group, by composite of Round 1 scores. Click a column heading to sort. Use the buttons on each row to advance a proposal to Round 2 or eliminate it.</div>`;
+    if (stage === 'round2') toolbar = `<div class="small muted">Composite is the mean of each rater's five-dimension average. Click a column heading to sort. Advance or eliminate each proposal from its row.</div>`;
+    if (stage === 'round3') {
+      const fundedItems = ov.stages.funded ? (await GC.get('/api/admin/proposals?stage=funded')).items : [];
+      const allocated = items.reduce((a, it) => a + (Number(it.award_usd) || 0), 0) + fundedItems.reduce((a, it) => a + (Number(it.award_usd) || 0), 0);
+      const pct = Math.min(100, Math.round((allocated / cfg.total_fund_usd) * 100));
+      toolbar = `<div class="row between"><div><div class="eyebrow" style="margin-bottom:2px">Allocation</div><div style="font-family:var(--font-heading);font-weight:600;font-size:22px;color:${allocated > cfg.total_fund_usd ? 'var(--red)' : 'var(--moss)'}">${GC.usd(allocated)} <span class="small muted" style="font-family:var(--font-body);font-weight:300">of ${GC.usd(cfg.total_fund_usd)} · ${GC.usd(cfg.total_fund_usd - allocated)} remaining</span></div><div class="progress mt-8" style="width:320px"><span style="width:${pct}%;${allocated > cfg.total_fund_usd ? 'background:var(--red)' : ''}"></span></div></div><div class="small muted" style="max-width:440px">Enter awards inline; the total includes proposals already marked Funded. Request more information from CEOs or add finance context from a proposal's Open view. Mark a proposal <strong>Funded</strong> once its award is final.</div></div>`;
+    }
+
+    const base = `${th('rank', '#', true)}${th('title', 'Proposal')}${th('group', 'Operating Group')}${th('ask', 'Ask (USD)', true)}`;
+    let head;
+    if (stage === 'round1') head = base + th('composite', 'R1 composite', true) + th('raters', 'Raters', true) + '<th></th>';
+    else if (stage === 'round2') head = base + th('r1', 'R1', true) + th('composite', 'R2 composite', true) + '<th>Dimensions</th>' + th('raters', 'Raters', true) + '<th></th>';
+    else if (stage === 'round3') head = base + th('r2', 'R2', true) + th('composite', 'R3 conviction', true) + th('rec', 'Avg. rec.', true) + th('award', 'Award (USD)', true) + '<th></th>';
+    else if (stage === 'funded') head = base + th('r2', 'R2', true) + th('r3', 'R3', true) + th('award', 'Award (USD)', true) + '<th></th>';
+    else head = base + th('elim', 'Eliminated in') + th('r1', 'R1', true) + th('r2', 'R2', true) + '<th></th>';
+
+    const rows = items.map((it, i) => {
+      const r1 = it.rounds[1], r2 = it.rounds[2], r3 = it.rounds[3];
+      const title = `<td class="title-cell"><a href="#" data-open="${it.id}" style="color:var(--ink)">${E(it.title)}</a><div class="muted">${E(it.opco)} · ${E(it.name)}</div>${it.follow_up_request ? `<div class="small" style="color:#1f5a7a;margin-top:3px">Follow-up ${it.follow_up_response ? 'answered' : 'requested'}</div>` : ''}</td>`;
+      const grp = `<td><span class="pill grey" style="font-size:11px">${E(it.operating_group)}</span></td>`;
+      const ask = `<td class="num">${GC.usd(it.capital_ask_usd)}<div class="muted">${GC.money(it.capital_ask, it.currency)} ${E(it.currency)}</div></td>`;
+      const rankCell = `<td class="num rank">${roundOf ? (it.rank ?? '-') : i + 1}</td>`;
+      const dims = `<td><span class="dims-mini">${['d1', 'd2', 'd3', 'd4', 'd5'].map((k) => `<span title="${E(cfg.round2_dimensions.find((d) => d.key === k)?.label || k)}">${r2.dims[k] !== null && r2.dims[k] !== undefined ? GC.score(r2.dims[k]) : '·'}</span>`).join('')}</span></td>`;
+      const openBtn = `<button class="btn xs outline" data-open="${it.id}">Open</button>`;
+      const advanceBtn = nextStage ? `<button class="btn xs" data-stage="${it.id}:${nextStage}">${nextStage === 'funded' ? 'Mark funded' : 'Advance to ' + GC.stageLabel(nextStage)}</button>` : '';
+      const elimBtn = `<button class="btn xs danger" data-stage="${it.id}:eliminated">Eliminate</button>`;
+      // Layout: primary action full width on top, then Open and the secondary action side by side.
+      const actions = (primary, secondary) => `<td><div class="stage-actions ${primary ? 'three' : 'two'}">${primary ? `<div class="wide">${primary}</div>` : ''}${openBtn}${secondary || ''}</div></td>`;
+      if (stage === 'round1') return `<tr>${rankCell}${title}${grp}${ask}<td class="num">${chip(r1.composite, it.rank === 1)}</td><td class="num muted">${r1.n}</td>${actions(advanceBtn, elimBtn)}</tr>`;
+      if (stage === 'round2') return `<tr>${rankCell}${title}${grp}${ask}<td class="num">${chip(r1.composite)}</td><td class="num">${chip(r2.composite, it.rank && it.rank <= (cfg.rounds[2].advance_top_n || 10))}</td>${dims}<td class="num muted">${r2.n}</td>${actions(advanceBtn, elimBtn)}</tr>`;
+      if (stage === 'round3') return `<tr>${rankCell}${title}${grp}${ask}<td class="num">${chip(r2.composite)}</td><td class="num">${chip(r3.composite)}<div class="muted">${r3.n ? GC.plural(r3.n, 'rater') : ''}</div></td><td class="num">${r3.avg_award_usd ? GC.usd(r3.avg_award_usd) : '-'}</td><td class="num"><input class="alloc-input" data-award="${it.id}" value="${it.award_usd ? Number(it.award_usd).toLocaleString('en-US') : ''}" placeholder="0"></td>${actions(advanceBtn, elimBtn)}</tr>`;
+      if (stage === 'funded') return `<tr>${rankCell}${title}${grp}${ask}<td class="num">${chip(r2.composite)}</td><td class="num">${chip(r3.composite)}</td><td class="num"><strong>${GC.usd(it.award_usd)}</strong></td>${actions('', `<button class="btn xs outline" data-stage="${it.id}:round3">Back to Round 3</button>`)}</tr>`;
+      return `<tr>${rankCell}${title}${grp}${ask}<td><span class="pill red" style="font-size:11px">Round ${E(it.eliminated_in || '?')}</span></td><td class="num">${chip(r1.composite)}</td><td class="num">${chip(r2.composite)}</td>${actions('', `<button class="btn xs outline" data-stage="${it.id}:round${it.eliminated_in || 1}">Restore</button>`)}</tr>`;
+    }).join('');
+
+    body.innerHTML = `<div class="card">${toolbar ? `<div class="mb-16">${toolbar}</div>` : ''}<div class="table-wrap"><table class="data"><thead><tr>${head}</tr></thead><tbody>${rows || `<tr><td colspan="10" class="muted" style="padding:28px;text-align:center">Nothing here yet.</td></tr>`}</tbody></table></div></div>`;
+
+    body.querySelectorAll('th.sortable').forEach((h) => h.addEventListener('click', () => {
+      const key = h.dataset.sort;
+      if (sort.key === key) sort.dir = sort.dir === 'desc' ? 'asc' : 'desc'; else { sort.key = key; sort.dir = ['title', 'group', 'opco'].includes(key) ? 'asc' : 'desc'; }
+      renderStage(stage, ov);
+    }));
+    body.querySelectorAll('[data-open]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); openProposal(items.find((x) => x.id === b.dataset.open)); }));
+    body.querySelectorAll('[data-stage]').forEach((b) => b.addEventListener('click', () => {
+      const [id, target] = b.dataset.stage.split(':');
+      if (target === 'eliminated' && !confirm('Eliminate this proposal? You can restore it from the Eliminated tab.')) return;
+      moveStage(id, target);
+    }));
+    body.querySelectorAll('[data-award]').forEach((inp) => inp.addEventListener('change', async () => {
+      const v = parseFloat(inp.value.replace(/[^0-9.]/g, ''));
+      try { await GC.api('PATCH', '/api/admin/proposals/' + inp.dataset.award, { award_usd: Number.isFinite(v) ? Math.round(v) : '' }); GC.toast('Award saved'); render(); } catch (e) { GC.toast(e.message, true); }
+    }));
+  }
+
+  async function moveStage(id, stage) {
+    try { await GC.api('POST', `/api/admin/proposals/${id}/stage`, { stage }); GC.toast('Moved to ' + GC.stageLabel(stage)); closeModal(); render(); } catch (e) { GC.toast(e.message, true); }
+  }
+
+  // ------------------------------------------------------------ proposal modal
+  function closeModal() { document.getElementById('modal-root').innerHTML = ''; }
+
+  function openProposal(it) {
+    const rounds = it.rounds;
+    const raterBlock = (r, label) => {
+      const s = rounds[r];
+      if (!s.n) return `<div class="setting-block"><div class="row between"><strong>${label}</strong><span class="muted small">No scores yet</span></div></div>`;
+      return `<div class="setting-block"><div class="row between mb-8"><strong>${label}</strong><span>${r === 2 ? `<span class="dims-mini" style="margin-right:8px">${['d1', 'd2', 'd3', 'd4', 'd5'].map((k) => `<span title="${E(cfg.round2_dimensions.find((d) => d.key === k)?.label || '')}">${s.dims[k] !== null && s.dims[k] !== undefined ? GC.score(s.dims[k]) : '·'}</span>`).join('')}</span>` : ''}${chip(s.composite, true)}</span></div>
+        ${s.raters.map((x) => `<div class="rater-row"><span class="avatar muted" style="width:26px;height:26px;font-size:11px">${E(GC.initials(x.rater_name))}</span><span><strong>${E(x.rater_name)}</strong>${r === 2 ? `<span class="dims-mini">${[x.d1, x.d2, x.d3, x.d4, x.d5].map((v) => `<span>${v ?? '·'}</span>`).join('')}</span>` : ''}${x.recommended_award_usd ? ` <span class="pill sky" style="font-size:11px">rec. ${GC.usd(x.recommended_award_usd)}</span>` : ''}${x.notes ? `<div class="muted" style="margin-top:2px">${E(x.notes)}</div>` : ''}</span>${chip(x.composite)}</div>`).join('')}
+        ${r === 3 && s.avg_award_usd ? `<div class="small muted mt-8">Average recommended award: <strong>${GC.usd(s.avg_award_usd)}</strong></div>` : ''}
+      </div>`;
+    };
+    const stageBtns = ['round1', 'round2', 'round3', 'funded', 'eliminated'].filter((s) => s !== it.stage).map((s) => `<button class="btn xs ${s === 'eliminated' ? 'danger' : 'outline'}" data-mstage="${s}">${s === 'eliminated' ? 'Eliminate' : 'Move to ' + GC.stageLabel(s)}</button>`).join('');
+
+    document.getElementById('modal-root').innerHTML = `<div class="modal-bg" id="modal-bg"><div class="modal" role="dialog" aria-modal="true">
+      <div class="m-head">
+        <div><div class="eyebrow" style="margin-bottom:6px">${E(it.operating_group)} · ${E(it.opco)} · <span class="pill ${it.stage === 'eliminated' ? 'red' : it.stage === 'funded' ? 'solid' : ''}" style="font-size:11px">${GC.stageLabel(it.stage)}${it.eliminated_in ? ' (R' + E(it.eliminated_in) + ')' : ''}</span></div><h2 style="font-size:22px">${E(it.title)}</h2><div class="small muted mt-8">${E(it.name)}${it.title_role ? ', ' + E(it.title_role) : ''} · ${E(it.email)} · submitted ${GC.dateTime(it.submitted_at)} · ${it.word_count} words</div></div>
+        <div style="text-align:right"><div class="eyebrow muted" style="margin-bottom:4px">Capital ask</div><div style="font-family:var(--font-heading);font-weight:600;font-size:22px;color:var(--moss)">${GC.money(it.capital_ask, it.currency)} <span class="small muted">${E(it.currency)}</span></div><div class="small muted">≈ ${GC.usd(it.capital_ask_usd)}</div><button class="close mt-8" id="modal-close" aria-label="Close">${GC.icons.x}</button></div>
+      </div>
+      <div class="m-body">
+        <div class="split">
+          <div>
+            <div class="idea-text">${E(it.idea)}</div>
+            <div class="mt-24"><div class="eyebrow">Move proposal</div><div class="stage-actions">${stageBtns}</div></div>
+            <div class="mt-24"><div class="eyebrow">Scores by round <span class="muted" style="font-weight:400;letter-spacing:0;text-transform:none">(admins only: raters never see these)</span></div>
+              ${raterBlock(1, 'Round 1 · Operating Group review')}${raterBlock(2, 'Round 2 · Semifinalists')}${raterBlock(3, 'Round 3 · Finalists')}
+            </div>
+          </div>
+          <div>
+            <form id="meta-form">
+              <div class="eyebrow">Follow-up with the CEO</div>
+              <label class="field"><span class="lbl">Information requested</span><textarea name="follow_up_request" style="min-height:70px" placeholder="e.g. Please share the pipeline behind the 8 enterprise deals and current ARR by segment.">${E(it.follow_up_request)}</textarea><div class="help">Shown to Round 3 reviewers. Send the request to the CEO by email; paste their answer below.</div></label>
+              <label class="field"><span class="lbl">CEO response</span><textarea name="follow_up_response" style="min-height:70px">${E(it.follow_up_response)}</textarea></label>
+              <div class="eyebrow mt-16">Finance context (Round 3)</div>
+              <div class="field-row">
+                <label class="field"><span class="lbl">LTM revenue</span><input type="text" name="ltm_revenue" value="${E(it.ltm_revenue)}" placeholder="e.g. $4.2M"></label>
+                <label class="field"><span class="lbl">LTM performance</span><input type="text" name="ltm_growth" value="${E(it.ltm_growth)}" placeholder="e.g. +12% ARR, 28% EBITDA"></label>
+              </div>
+              <div class="field-row">
+                <label class="field"><span class="lbl">Purchase price</span><input type="text" name="purchase_price" value="${E(it.purchase_price)}" placeholder="e.g. $11M (2023)"></label>
+                <label class="field"><span class="lbl">Final award (USD)</span><input type="text" name="award_usd" value="${it.award_usd ? Number(it.award_usd).toLocaleString('en-US') : ''}" placeholder="0"></label>
+              </div>
+              <label class="field"><span class="lbl">Admin notes (private)</span><textarea name="admin_notes" style="min-height:70px">${E(it.admin_notes)}</textarea></label>
+              <div class="field-row">
+                <label class="field"><span class="lbl">Operating Group (correct if mis-routed)</span><select name="operating_group">${cfg.operating_groups.map((g) => `<option ${g === it.operating_group ? 'selected' : ''}>${E(g)}</option>`).join('')}</select></label>
+                <label class="field"><span class="lbl">Ask in USD (override)</span><input type="text" name="capital_ask_usd" value="${it.capital_ask_usd ? Number(it.capital_ask_usd).toLocaleString('en-US') : ''}"></label>
+              </div>
+              <div class="row between"><span class="small muted" id="meta-msg"></span><button type="submit" class="btn sm">Save details</button></div>
+            </form>
+          </div>
+        </div>
+      </div></div></div>`;
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('modal-bg').addEventListener('click', (e) => { if (e.target.id === 'modal-bg') closeModal(); });
+    document.querySelectorAll('[data-mstage]').forEach((b) => b.addEventListener('click', () => { if (b.dataset.mstage !== 'eliminated' || confirm('Eliminate this proposal? You can restore it from the Eliminated tab.')) moveStage(it.id, b.dataset.mstage); }));
+    document.getElementById('meta-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target); const payload = {};
+      for (const [k, v] of fd.entries()) payload[k] = (k === 'award_usd' || k === 'capital_ask_usd') ? (v.trim() ? String(Math.round(parseFloat(v.replace(/[^0-9.]/g, '')) || 0)) : '') : v;
+      try { await GC.api('PATCH', '/api/admin/proposals/' + it.id, payload); GC.toast('Saved'); closeModal(); render(); } catch (err) { document.getElementById('meta-msg').textContent = err.message; }
+    });
+  }
+
+  // ------------------------------------------------------------ settings
+  function renderSettings() {
+    body.innerHTML = `<div class="split">
+      <div>
+        <div class="card">
+          <div class="card-title"><span>${GC.icons.settings}</span>Challenge</div>
+          <div class="field-row">
+            <label class="field"><span class="lbl">Total fund (USD)</span><input type="text" id="s-fund" value="${Number(cfg.total_fund_usd).toLocaleString('en-US')}"></label>
+            <label class="field"><span class="lbl">Word limit</span><input type="number" id="s-words" value="${cfg.word_limit}"></label>
+          </div>
+          <div class="field-row">
+            <label class="field"><span class="lbl">Deadline (ISO 8601 with offset)</span><input type="text" id="s-deadline" value="${E(cfg.deadline)}"><div class="help">Eastern time is <code>-04:00</code> in October (EDT). Submissions lock after this moment.</div></label>
+            <label class="field"><span class="lbl">Deadline as shown to OpCos</span><input type="text" id="s-deadline-label" value="${E(cfg.deadline_label)}"><div class="help">Display time zone: <input type="text" id="s-deadline-tz" value="${E(cfg.deadline_tz || 'America/New_York')}" style="width:200px;padding:3px 8px;display:inline-block;font-size:13px"></div></label>
+          </div>
+          <label class="field"><span class="lbl">Key dates (one per line: YYYY-MM-DD | label | detail)</span><textarea id="s-keydates" style="min-height:130px;font-family:ui-monospace,Menlo,monospace;font-size:13px">${E((cfg.key_dates || []).map((k) => [k.date, k.label, k.detail || ''].join(' | ')).join('\n'))}</textarea><div class="help">Shown in the Key dates card on the overview page.</div></label>
+          <label class="field"><span class="lbl">Round names</span><div class="field-row" style="grid-template-columns:1fr 1fr 1fr">${['1', '2', '3'].map((r) => `<input type="text" data-rname="${r}" value="${E(cfg.rounds[r].name)}" placeholder="Round ${r}">`).join('')}</div></label>
+          <div class="eyebrow mt-8">Indicative FX to USD</div>
+          <div class="row" style="gap:10px">${cfg.currencies.map((c) => `<label class="small" style="display:flex;align-items:center;gap:6px"><strong>${c}</strong><input type="text" data-fx="${c}" value="${cfg.fx_to_usd[c] ?? ''}" style="width:70px;padding:5px 8px"></label>`).join('')}</div>
+          <div class="help">Used only to normalise asks for comparison. <a href="#" id="recompute">Recompute USD asks</a> after changing rates.</div>
+          <div class="row mt-24"><button class="btn sm" id="save-general">Save settings</button></div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title"><span>${GC.icons.layers}</span>Operating Groups</div>
+          <p class="sub">One per line. These drive the submission form, Round 1 reviewer assignments and the group ranking. Renaming a group here does not rename it on existing proposals; fix those from the proposal's Open view.</p>
+          <textarea id="s-groups" style="min-height:250px">${E(cfg.operating_groups.join('\n'))}</textarea>
+          <div class="row mt-16"><button class="btn sm" id="save-groups">Save Operating Groups</button></div>
+        </div>
+        <div class="card mt-16">
+          <div class="card-title"><span>${GC.icons.users}</span>Reviewers and admins</div>
+          <p class="sub" style="margin:0">Who can review which round, and which Operating Groups, is managed on the <a href="#" id="go-people">Reviewers</a> tab.</p>
+        </div>
+      </div>
+    </div>`;
+
+    document.getElementById('go-people').addEventListener('click', (e) => { e.preventDefault(); tab = 'people'; history.replaceState(null, '', '?tab=people'); render(); });
+    document.getElementById('save-general').addEventListener('click', async () => {
+      cfg.total_fund_usd = Math.round(parseFloat(document.getElementById('s-fund').value.replace(/[^0-9.]/g, '')) || 0);
+      cfg.word_limit = parseInt(document.getElementById('s-words').value, 10) || 300;
+      cfg.deadline = document.getElementById('s-deadline').value.trim();
+      cfg.deadline_label = document.getElementById('s-deadline-label').value.trim();
+      cfg.deadline_tz = document.getElementById('s-deadline-tz').value.trim() || 'America/New_York';
+      cfg.key_dates = document.getElementById('s-keydates').value.split('\n').map((l) => l.split('|').map((x) => x.trim())).filter((a) => /^\d{4}-\d{2}-\d{2}$/.test(a[0])).map((a) => ({ date: a[0], label: a[1] || '', detail: a[2] || '' }));
+      for (const r of ['1', '2', '3']) cfg.rounds[r].name = document.querySelector(`[data-rname="${r}"]`).value.trim() || cfg.rounds[r].name;
+      document.querySelectorAll('[data-fx]').forEach((i) => { const v = parseFloat(i.value); if (Number.isFinite(v)) cfg.fx_to_usd[i.dataset.fx] = v; });
+      await saveCfg(); renderSettings();
+    });
+    document.getElementById('save-groups').addEventListener('click', async () => {
+      const groups = [...new Set(document.getElementById('s-groups').value.split('\n').map((g) => g.trim()).filter(Boolean))];
+      if (!groups.length) { GC.toast('Add at least one Operating Group', true); return; }
+      cfg.operating_groups = groups; await saveCfg(); renderSettings();
+    });
+    document.getElementById('recompute').addEventListener('click', async (e) => { e.preventDefault(); try { await GC.api('PUT', '/api/admin/config', cfg); const r = await GC.api('POST', '/api/admin/recompute-fx'); GC.toast(`Recomputed ${r.updated} asks`); } catch (err) { GC.toast(err.message, true); } });
+  }
+
+  // ------------------------------------------------------------ reviewers (people & privileges)
+  // One row per Banyan team member. Admin flag, a checkbox per round, and the
+  // Operating Groups they may review in Round 1. Saved back into config.json as
+  // the admins list and the per-round rater lists, which is what SSO-derived
+  // identities are matched against by email.
+  function peopleFromConfig() {
+    const map = new Map();
+    const get = (email, name, title) => { const e = String(email || '').toLowerCase(); if (!map.has(e)) map.set(e, { email: e, name: name || '', title: title || '', admin: false, r1: false, r2: false, r3: false, groups: [] }); const p = map.get(e); if (name && !p.name) p.name = name; if (title && !p.title) p.title = title; return p; };
+    for (const a of cfg.admins || []) get(a.email, a.name, a.title).admin = true;
+    for (const r of ['1', '2', '3']) for (const x of cfg.rounds[r].raters || []) { const p = get(x.email, x.name, x.title); p['r' + r] = true; if (r === '1') p.groups = x.groups || []; }
+    return [...map.values()];
+  }
+  function configFromPeople(people) {
+    cfg.admins = people.filter((p) => p.admin && p.email).map((p) => ({ email: p.email, name: p.name, title: p.title }));
+    for (const r of ['1', '2', '3']) cfg.rounds[r].raters = people.filter((p) => p['r' + r] && p.email).map((p) => ({ email: p.email, name: p.name, title: p.title, groups: r === '1' ? p.groups : [] }));
+  }
+
+  let peopleDraft = null, editingGroups = null;
+  function renderPeople() {
+    if (!peopleDraft) peopleDraft = peopleFromConfig();
+    const people = peopleDraft;
+    const groupSel = (p, idx) => `<div class="chip-input">${cfg.operating_groups.map((g) => `<label class="${p.groups.includes(g) ? 'on' : ''}"><input type="checkbox" data-grp="${idx}" value="${E(g)}" ${p.groups.includes(g) ? 'checked' : ''}>${E(g)}</label>`).join('')}<label class="${!p.groups.length ? 'on' : ''}" title="No groups selected means every group"><input type="checkbox" data-allgrp="${idx}" ${!p.groups.length ? 'checked' : ''}>All groups</label><button class="btn xs" data-donegrp="${idx}">Done</button></div>`;
+    const rows = people.map((p, idx) => `<tr>
+        <td><input type="text" value="${E(p.name)}" placeholder="Name" data-pf="${idx}:name" style="min-width:160px"></td>
+        <td><input type="text" value="${E(p.title)}" placeholder="Title" data-pf="${idx}:title" style="min-width:180px"></td>
+        <td><input type="email" value="${E(p.email)}" placeholder="email@banyansoftware.com" data-pf="${idx}:email" style="min-width:230px"></td>
+        <td style="text-align:center"><input type="checkbox" data-pc="${idx}:admin" ${p.admin ? 'checked' : ''} style="accent-color:var(--moss);width:16px;height:16px"></td>
+        <td style="text-align:center"><input type="checkbox" data-pc="${idx}:r1" ${p.r1 ? 'checked' : ''} style="accent-color:var(--moss);width:16px;height:16px"></td>
+        <td style="text-align:center"><input type="checkbox" data-pc="${idx}:r2" ${p.r2 ? 'checked' : ''} style="accent-color:var(--moss);width:16px;height:16px"></td>
+        <td style="text-align:center"><input type="checkbox" data-pc="${idx}:r3" ${p.r3 ? 'checked' : ''} style="accent-color:var(--moss);width:16px;height:16px"></td>
+        <td style="min-width:260px">${!p.r1 ? '<span class="small muted">Not a Round 1 reviewer</span>' : editingGroups === idx ? groupSel(p, idx) : `<span class="small">${p.groups.length ? p.groups.map((g) => `<span class="pill grey" style="font-size:11px;margin:1px 2px 1px 0">${E(g)}</span>`).join('') : '<span class="pill" style="font-size:11px">All groups</span>'} <button class="btn xs ghost" data-editgrp="${idx}">Edit</button></span>`}</td>
+        <td><button class="btn xs danger" data-pdel="${idx}">Remove</button></td>
+      </tr>`).join('');
+
+    body.innerHTML = `<div class="card">
+      <div class="row between mb-16" style="align-items:flex-start">
+        <div><div class="card-title" style="margin-bottom:4px"><span>${GC.icons.users}</span>Reviewers and admins</div><div class="sub" style="max-width:760px">Everyone on the Banyan side of the challenge, with what they can do. Round 1 reviewers only see proposals from the Operating Groups ticked here; Round 2 and 3 reviewers see every proposal in the round. People are matched to these rows by email, so each address must be the one they sign in with. Changes take effect when you click Save.</div></div>
+        <div class="row"><button class="btn outline sm" id="p-add">+ Add person</button><button class="btn sm" id="p-save">Save changes</button></div>
+      </div>
+      <div class="table-wrap"><table class="data people"><thead><tr><th>Name</th><th>Title</th><th>Email (SSO)</th><th style="text-align:center">Admin</th><th style="text-align:center">Round 1</th><th style="text-align:center">Round 2</th><th style="text-align:center">Round 3</th><th>Round 1 Operating Groups</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="small muted mt-16">${people.length} people · ${people.filter((p) => p.admin).length} admins · ${people.filter((p) => p.r1).length} in Round 1 · ${people.filter((p) => p.r2).length} in Round 2 · ${people.filter((p) => p.r3).length} in Round 3</div>
+    </div>`;
+
+    const readInputs = () => {
+      body.querySelectorAll('[data-pf]').forEach((i) => { const [idx, f] = i.dataset.pf.split(':'); people[idx][f] = i.value.trim(); });
+      body.querySelectorAll('[data-pc]').forEach((i) => { const [idx, f] = i.dataset.pc.split(':'); people[idx][f] = i.checked; });
+      body.querySelectorAll('[data-grp]').forEach((i) => { const p = people[i.dataset.grp]; if (i.checked && !p.groups.includes(i.value)) p.groups.push(i.value); if (!i.checked) p.groups = p.groups.filter((g) => g !== i.value); });
+    };
+    body.querySelectorAll('[data-pc]').forEach((i) => i.addEventListener('change', () => { readInputs(); if (i.dataset.pc.endsWith(':r1')) renderPeople(); }));
+    body.querySelectorAll('[data-grp]').forEach((i) => i.addEventListener('change', () => { readInputs(); renderPeople(); }));
+    body.querySelectorAll('[data-allgrp]').forEach((i) => i.addEventListener('change', () => { readInputs(); people[i.dataset.allgrp].groups = []; renderPeople(); }));
+    body.querySelectorAll('[data-pdel]').forEach((b) => b.addEventListener('click', () => { readInputs(); people.splice(Number(b.dataset.pdel), 1); editingGroups = null; renderPeople(); }));
+    body.querySelectorAll('[data-editgrp]').forEach((b) => b.addEventListener('click', () => { readInputs(); editingGroups = Number(b.dataset.editgrp); renderPeople(); }));
+    body.querySelectorAll('[data-donegrp]').forEach((b) => b.addEventListener('click', () => { readInputs(); editingGroups = null; renderPeople(); }));
+    document.getElementById('p-add').addEventListener('click', () => { readInputs(); people.push({ email: '', name: '', title: '', admin: false, r1: false, r2: false, r3: false, groups: [] }); renderPeople(); window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); });
+    document.getElementById('p-save').addEventListener('click', async () => {
+      readInputs();
+      const bad = people.find((p) => p.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p.email));
+      if (bad) { GC.toast('Check the email for ' + (bad.name || bad.email), true); return; }
+      if (!people.some((p) => p.admin && p.email)) { GC.toast('Keep at least one admin', true); return; }
+      configFromPeople(people); await saveCfg(); peopleDraft = null; editingGroups = null; renderPeople();
+    });
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

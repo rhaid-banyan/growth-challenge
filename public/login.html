@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in · Banyan 2026 Growth Challenge</title>
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div id="site-header"></div>
+<main>
+<div class="container narrow">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Banyan Business Portal</div>
+      <h1 style="font-size:34px">Sign in</h1>
+    </div>
+  </div>
+
+  <div class="notice info mb-24">
+    <strong>Mock sign-in for the prototype.</strong> In production this page disappears: you arrive already signed in through the Banyan Business Portal (SSO), and your name, operating company and Operating Group are read from your portal profile. For now, pick who you want to be.
+  </div>
+
+  <div class="card mb-16">
+    <div class="row between mb-16">
+      <div class="card-title" style="margin:0"><span id="ic-users"></span>Operating company users</div>
+      <input type="text" id="filter" placeholder="Search by name, company or group…" style="max-width:320px">
+    </div>
+    <div class="login-grid" id="users"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span id="ic-staff"></span>Banyan team (reviewers &amp; admins)</div>
+    <p class="sub">Reviewers only see the rounds they are assigned to; admins see everything. Names, titles and review assignments come from the challenge configuration (Admin > Reviewers); in production, identity comes from SSO.</p>
+    <div class="login-grid" id="staff"></div>
+  </div>
+
+  <div class="card mt-16 tight">
+    <div class="row">
+      <div class="lbl" style="margin:0">Or sign in with any listed email</div>
+      <input type="email" id="email" placeholder="name@company.com" style="max-width:320px">
+      <button class="btn sm" id="go">Sign in</button>
+    </div>
+  </div>
+</div>
+</main>
+<div id="site-footer"></div>
+
+<script src="/js/app.js"></script>
+<script>
+(async function () {
+  await GC.loadSession();
+  GC.renderHeader('');
+  document.getElementById('ic-users').innerHTML = GC.icons.users;
+  document.getElementById('ic-staff').innerHTML = GC.icons.lock;
+  const next = GC.qs('next') || '/';
+  const dir = await GC.get('/api/directory');
+
+  async function login(email) {
+    try {
+      const r = await GC.api('POST', '/api/auth/login', { email });
+      const roles = r.roles;
+      // Send people somewhere useful if no explicit destination was requested.
+      let dest = next;
+      if (dest === '/' || !dest) dest = roles.isAdmin ? '/admin' : roles.raterRounds.length ? '/review' : roles.isSubmitter ? '/submit' : '/';
+      location.href = dest;
+    } catch (e) { GC.toast(e.message, true); }
+  }
+
+  const persona = (u, kind) => `<button class="persona" data-email="${GC.esc(u.email)}">
+      <span class="avatar ${kind === 'staff' ? '' : 'muted'}">${GC.esc(GC.initials(u.name))}</span>
+      <span style="min-width:0"><span class="n">${GC.esc(u.name)}</span><br><span class="m">${GC.esc(kind === 'staff' ? [u.title, u.kind].filter(Boolean).join(' · ') : (u.title ? u.title + ' · ' : '') + u.opco)}</span></span>
+      ${kind === 'staff' ? '' : `<span class="pill grey grp" style="font-size:11px">${GC.esc(u.operating_group)}</span>`}
+    </button>`;
+
+  const usersEl = document.getElementById('users');
+  const render = (q) => {
+    q = (q || '').toLowerCase();
+    const list = dir.users.filter((u) => !q || [u.name, u.opco, u.operating_group, u.email].join(' ').toLowerCase().includes(q));
+    usersEl.innerHTML = list.map((u) => persona(u, 'user')).join('') || '<div class="muted small">No matches.</div>';
+  };
+  render('');
+  document.getElementById('filter').addEventListener('input', (e) => render(e.target.value));
+  document.getElementById('staff').innerHTML = dir.staff.map((u) => persona(u, 'staff')).join('') || '<div class="muted small">No Banyan team members configured yet: add admins and raters in data/config.json or run the seed script.</div>';
+
+  document.body.addEventListener('click', (e) => { const b = e.target.closest('.persona'); if (b) login(b.dataset.email); });
+  document.getElementById('go').addEventListener('click', () => login(document.getElementById('email').value));
+  document.getElementById('email').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(e.target.value); });
+})();
+</script>
+</body>
+</html>
