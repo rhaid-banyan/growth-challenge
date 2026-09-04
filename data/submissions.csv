@@ -1,222 +1,222 @@
 id,submitted_at,updated_at,email,name,title_role,opco,operating_group,title,idea,word_count,capital_ask,currency,capital_ask_usd,stage,eliminated_in,award_usd,follow_up_request,follow_up_response,ltm_revenue,ltm_growth,purchase_price,admin_notes
-gc_08697e246a,2026-09-09T15:00:00.000Z,2026-09-09T15:00:00.000Z,dean.c@iconi.example,Dean Carville,CEO,ICONI Software,UK and RoE,Programme Builder AI Assistant for Enspirio,"We propose a Programme Builder assistant that reads a customer's programme documentation, often 200+ pages, and produces a recommended Enspirio configuration in under an hour instead of three to six weeks of business-analyst time.
+gc_11d65ca41a,2026-09-09T11:00:00.000Z,2026-09-09T11:00:00.000Z,dean.c@iconi.example,Dean Carville,CEO,ICONI Software,UK and RoE,Programme Builder AI Assistant for Enspirio,"We propose a Programme Builder assistant that reads a customer's programme documentation, often 200+ pages, and produces a recommended Enspirio configuration in under an hour instead of three to six weeks of business-analyst time.
 
 Execution: two engineers and one domain BA for nine months, building on our existing configuration API. First 90 days: ingest the last 40 implementations as training examples and ship an internal-only version to our onboarding team. The largest risk is configuration accuracy on unusual programmes; we mitigate with a mandatory human review step until accuracy exceeds 95% on the back-catalogue.
 
 Market unlock: customers currently pay around £10.5k for a medium programme build and larger ones run multiple programmes a year. A £20k per-build price or £40–50k unlimited licence is attractive to the 30 customers who told us onboarding time is the main blocker to expanding usage. It also opens the mid-market segment we cannot serve profitably today.
 
 ROI: £120k of internal BA capacity redeployed to sales engineering plus £250k of new build revenue in the first twelve months against a £200k ask.",176,200000,GBP,270000,round1,,,,,,,,
-gc_8089225e59,2026-09-10T00:00:00.000Z,2026-09-10T00:00:00.000Z,phil.m@atamis.example,Phil Musgrave,CEO,Atamis,UK and RoE,Data Insight Hub for public-sector procurement benchmarks,"Atamis holds procurement data across 200+ UK public bodies. Today it sits in customer silos. We propose a Data Insight Hub that consolidates anonymised spend, supplier and cycle-time data into benchmarks and predictive analytics sold as a premium tier.
+gc_e9434bf3cd,2026-09-10T01:00:00.000Z,2026-09-10T01:00:00.000Z,phil.m@atamis.example,Phil Musgrave,CEO,Atamis,UK and RoE,Data Insight Hub for public-sector procurement benchmarks,"Atamis holds procurement data across 200+ UK public bodies. Today it sits in customer silos. We propose a Data Insight Hub that consolidates anonymised spend, supplier and cycle-time data into benchmarks and predictive analytics sold as a premium tier.
 
 Execution: a data engineer, an analyst and a part-time product manager for twelve months. Ninety-day milestone: benchmark reports for the NHS trust segment, piloted free with six ""innovation partner"" customers already signed up in principle. Risk: data-sharing consent; we have legal sign-off on the anonymisation approach and will make participation opt-in.
 
 Market unlock: this moves us from workflow tool to strategic partner for procurement directors and opens a sale to central government bodies that do not buy our transactional product.
 
 ROI: 25 customers at £15k per year within twelve months is £375k ARR, with 80%+ margin because the data already exists. Payback inside the first year on a £365k ask.",149,365000,GBP,492750,round1,,,,,,,,
-gc_bd8da413a6,2026-09-10T13:00:00.000Z,2026-09-10T13:00:00.000Z,andy.k@intuitive.example,Andy Keeley,CEO,intuitive,UK and RoE,Cruise inventory and booking in iVector,"iVector is excluded from cruise-centric RFPs and disadvantaged wherever cruise is a requirement. We propose adding live cruise inventory, pricing and booking to the platform.
+gc_c9f374facd,2026-09-11T00:00:00.000Z,2026-09-11T00:00:00.000Z,andy.k@intuitive.example,Andy Keeley,CEO,intuitive,UK and RoE,Cruise inventory and booking in iVector,"iVector is excluded from cruise-centric RFPs and disadvantaged wherever cruise is a requirement. We propose adding live cruise inventory, pricing and booking to the platform.
 
 Execution: MVP integration with two cruise lines in three months, full feature set in nine, using our existing integration framework (400+ supplier connections to date). Team: two developers and a product owner. Risk: supplier contracting timelines, mitigated by starting with the two lines where relationships already exist.
 
 Market unlock: expands our UK TAM by an estimated £10.7m ARR and improves win rates in a £5.2m segment of our current pipeline. A cruise-only competitor exists but no full-service platform offers this.
 
 ROI: a targeted campaign to 67 operators; we expect 25–30 engagements and at least two signed deals worth ~£300k ARR within twelve months, ~£900k within 24. Payback in under a year.",136,175000,GBP,236250,round1,,,,,,,,
-gc_0024675888,2026-09-11T12:00:00.000Z,2026-09-11T12:00:00.000Z,juan.c@hhs.example,Juan Correia,CEO,HOST Hotel Systems,UK and RoE,Cancellation prediction and recovery for hotels,"A 100-room hotel at 70% occupancy sees about 140 cancellations a month. We propose a model that flags high-risk bookings and an automated, multilingual outreach flow through Host PMS that strengthens guest commitment before they cancel.
+gc_b07f59e959,2026-09-11T10:00:00.000Z,2026-09-11T10:00:00.000Z,juan.c@hhs.example,Juan Correia,CEO,HOST Hotel Systems,UK and RoE,Cancellation prediction and recovery for hotels,"A 100-room hotel at 70% occupancy sees about 140 cancellations a month. We propose a model that flags high-risk bookings and an automated, multilingual outreach flow through Host PMS that strengthens guest commitment before they cancel.
 
 Execution: three-month A/B pilot across ten hotels already committed, then rollout to the base. Team: one data scientist and one developer, with our revenue-management lead as product owner. Risk: guest response rates below plan; our pilot design measures this in the first 90 days before we scale.
 
 Market unlock: success-fee pricing (7.5% of recovered revenue) means hotels pay only for results, which opens the small-independent segment that resists subscription upsells.
 
 ROI: recovering 20% of contacted bookings is roughly €4,200 per hotel per month. Scaling to 300 hotels in twelve months yields over €1m of gross recovery revenue and €500k+ of contribution against a €150k ask.",141,150000,EUR,174000,round1,,,,,,,,
-gc_950cabb2f4,2026-09-12T11:00:00.000Z,2026-09-12T11:00:00.000Z,viktor.k@flexi.example,Viktor Kuttner,CEO,Flexi Medical Cloud,UK and RoE,AI-powered dental supplies marketplace inside Flexi-Dent,"Hungarian dental practices buy roughly HUF 30bn of supplies a year with 8–12% distributor commissions and opaque pricing. Because all invoices flow through the tax authority in real time, Flexi already knows who bought what, when and for how much.
+gc_471c1647cf,2026-09-12T02:00:00.000Z,2026-09-12T02:00:00.000Z,viktor.k@flexi.example,Viktor Kuttner,CEO,Flexi Medical Cloud,UK and RoE,AI-powered dental supplies marketplace inside Flexi-Dent,"Hungarian dental practices buy roughly HUF 30bn of supplies a year with 8–12% distributor commissions and opaque pricing. Because all invoices flow through the tax authority in real time, Flexi already knows who bought what, when and for how much.
 
 Execution: integrate a supplies webshop into Flexi-Dent that tracks stock depletion from treatments, matches identical products across suppliers, and alerts practices to the cheapest source; purchases run through Flexi Pay. Team: three developers for ten months. Risk: supplier onboarding; we have letters of intent from four distributors covering ~40% of the market.
 
 Market unlock: a new revenue stream from supplier fees and payment processing, never from our clients, and a foundation for the same model in our Romanian and Slovak expansion.
 
 ROI: $1.15m ARR potential at full adoption; 18% return in year one, 50% in year two, on a $135k ask.",141,135000,USD,135000,round1,,,,,,,,
-gc_dcb6cda525,2026-09-13T14:00:00.000Z,2026-09-13T14:00:00.000Z,lena.h@ordoware.example,Lena Hartmann,Geschäftsführerin,Ordoware GmbH,DACH,Ordoware Connect: e-invoicing compliance module for German SMEs,"Germany's mandatory B2B e-invoicing phases in from 2027, and our 1,900 SME customers will need compliant issuance and receipt. We propose Ordoware Connect: a certified e-invoicing module (XRechnung, ZUGFeRD, Peppol) sold as an add-on.
+gc_4ba0745f80,2026-09-12T20:00:00.000Z,2026-09-12T20:00:00.000Z,lena.h@ordoware.example,Lena Hartmann,Geschäftsführerin,Ordoware GmbH,DACH,Ordoware Connect: e-invoicing compliance module for German SMEs,"Germany's mandatory B2B e-invoicing phases in from 2027, and our 1,900 SME customers will need compliant issuance and receipt. We propose Ordoware Connect: a certified e-invoicing module (XRechnung, ZUGFeRD, Peppol) sold as an add-on.
 
 Execution: certification work with a partner already engaged, two developers for eight months, and a launch campaign timed to the regulatory deadline. Risk: certification slippage; we start with the receipt path, which has the earliest deadline.
 
 Market unlock: every customer is a prospect, and compliance is the wedge into the 8,000 German firms on legacy competitors who will not deliver in time.
 
 ROI: €9/month per customer on 60% of the base is €1.2m ARR within twelve months of launch; €220k ask covers build and certification.",119,220000,EUR,255200,round1,,,,,,,,
-gc_210bb72a7f,2026-09-14T01:00:00.000Z,2026-09-14T01:00:00.000Z,markus.b@kraftplan.example,Markus Bauer,CEO,KraftPlan Software,DACH,Expand KraftPlan into Austria and Switzerland,"KraftPlan leads maintenance planning for German mid-size energy utilities but has no presence in Austria or Switzerland, where the same regulatory drivers apply. We propose a dedicated two-person DACH expansion team and localisation of the product.
+gc_ae876b286a,2026-09-14T01:00:00.000Z,2026-09-14T01:00:00.000Z,markus.b@kraftplan.example,Markus Bauer,CEO,KraftPlan Software,DACH,Expand KraftPlan into Austria and Switzerland,"KraftPlan leads maintenance planning for German mid-size energy utilities but has no presence in Austria or Switzerland, where the same regulatory drivers apply. We propose a dedicated two-person DACH expansion team and localisation of the product.
 
 Execution: hire a sales lead in Vienna and a solutions consultant; localise for Austrian and Swiss grid regulations in the first six months; attend the two key industry events. Risk: long utility sales cycles, mitigated by our existing referenceable customers who operate cross-border.
 
 Market unlock: 140 addressable utilities in Austria and Switzerland, roughly doubling our TAM, with no incumbent vertical solution.
 
 ROI: four new customers at €90k ACV in twelve months (€360k ARR) with an eighteen-month payback on the €300k ask; the pipeline after that is what matters.",124,300000,EUR,348000,round1,,,,,,,,
-gc_4ed3d8ccda,2026-09-14T09:00:00.000Z,2026-09-14T09:00:00.000Z,sophie.w@zeitlog.example,Sophie Weber,CEO,ZeitLog AG,DACH,ZeitLog mobile time capture for field crews,"Our customers' field crews still submit paper timesheets that office staff key in. We propose a mobile capture app with offline support and photo receipts that syncs into ZeitLog.
+gc_2940077066,2026-09-15T00:00:00.000Z,2026-09-15T00:00:00.000Z,sophie.w@zeitlog.example,Sophie Weber,CEO,ZeitLog AG,DACH,ZeitLog mobile time capture for field crews,"Our customers' field crews still submit paper timesheets that office staff key in. We propose a mobile capture app with offline support and photo receipts that syncs into ZeitLog.
 
 Execution: one mobile developer and one backend developer for six months; pilot with three customers who have asked for this. Risk: adoption by crews; we are designing for a two-tap daily interaction.
 
 Market unlock: enables selling to construction firms with 50+ field staff, a segment that has rejected us on this gap.
 
 ROI: €4 per user per month on an addressable 4,000 seats is €190k ARR; €90k ask.",97,90000,EUR,104400,round1,,,,,,,,
-gc_5a0f206653,2026-09-15T00:00:00.000Z,2026-09-15T00:00:00.000Z,carla.r@meterwise.example,Carla Ruiz,CEO,MeterWise,MIU,MeterWise Insights: usage analytics for co-op utilities,"MeterWise bills 180 rural electric co-ops. Their boards increasingly want to see load patterns, EV adoption and outage correlations that we already hold the data for. We propose Insights, a self-serve analytics layer sold per co-op.
+gc_e01d3744b4,2026-09-15T15:00:00.000Z,2026-09-15T15:00:00.000Z,carla.r@meterwise.example,Carla Ruiz,CEO,MeterWise,MIU,MeterWise Insights: usage analytics for co-op utilities,"MeterWise bills 180 rural electric co-ops. Their boards increasingly want to see load patterns, EV adoption and outage correlations that we already hold the data for. We propose Insights, a self-serve analytics layer sold per co-op.
 
 Execution: two data engineers and a designer for nine months, using our existing warehouse; five co-ops in a design-partner program have committed to pay on launch. Risk: performance on our largest customers' data volumes; we will validate the architecture on the top three in the first 90 days.
 
 Market unlock: opens the sale to the 600 co-ops on competitor billing platforms, since Insights can ingest their data as a standalone product.
 
 ROI: $25k per year on 40 co-ops within twelve months is $1m ARR against a $350k ask.",124,350000,USD,350000,round1,,,,,,,,
-gc_2b41913a2f,2026-09-16T10:00:00.000Z,2026-09-16T10:00:00.000Z,james.o@gridlane.example,James Okafor,CEO,GridLane Systems,MIU,Outage management module for municipal utilities,"Small municipal utilities cannot afford enterprise outage management systems and run on phones and whiteboards. GridLane already has their customer and meter data. We propose a lightweight OMS module.
+gc_7cf8fcf4dc,2026-09-16T08:00:00.000Z,2026-09-16T08:00:00.000Z,james.o@gridlane.example,James Okafor,CEO,GridLane Systems,MIU,Outage management module for municipal utilities,"Small municipal utilities cannot afford enterprise outage management systems and run on phones and whiteboards. GridLane already has their customer and meter data. We propose a lightweight OMS module.
 
 Execution: three developers for ten months; two municipals are pilot partners. Risk: integration with diverse SCADA systems; we will support the two most common first.
 
 Market unlock: a $12k-per-year module for 400 addressable utilities, plus a differentiator against our two main competitors in new-logo bids.
 
 ROI: 30 customers in twelve months is $360k ARR on a $275k ask.",87,275000,USD,275000,round1,,,,,,,,
-gc_fac9ab07df,2026-09-16T16:00:00.000Z,2026-09-16T16:00:00.000Z,priya.n@fieldflow.example,Priya Natarajan,CEO,FieldFlow,MIU,FieldFlow AI dispatcher,"Dispatchers at our water-utility customers spend hours a day manually sequencing work orders. We propose an AI dispatcher that proposes daily routes and re-sequences work as emergencies arrive, with a human approving each plan.
+gc_1c6b47eb0b,2026-09-17T11:00:00.000Z,2026-09-17T11:00:00.000Z,priya.n@fieldflow.example,Priya Natarajan,CEO,FieldFlow,MIU,FieldFlow AI dispatcher,"Dispatchers at our water-utility customers spend hours a day manually sequencing work orders. We propose an AI dispatcher that proposes daily routes and re-sequences work as emergencies arrive, with a human approving each plan.
 
 Execution: one ML engineer and one developer for eight months; three customers in a pilot. Risk: trust; the dispatcher stays in the loop and every recommendation is explainable.
 
 Market unlock: repositions FieldFlow from a record-keeping tool to a productivity tool, supporting a 30% price uplift at renewal and a new pitch to the 250 utilities on competitor systems.
 
 ROI: uplift on 60 renewals in twelve months is $290k ARR against a $180k ask.",107,180000,USD,180000,round1,,,,,,,,
-gc_1f353a3508,2026-09-17T07:00:00.000Z,2026-09-17T07:00:00.000Z,tom.g@wellsync.example,Tom Gallagher,President,WellSync,MIU,WellSync regulatory reporting for Texas and New Mexico,"Independent oil and gas operators file the same production data with three regulators in slightly different formats. WellSync holds the data. We propose automated regulatory filing for Texas RRC and New Mexico OCD.
+gc_cdd3a00625,2026-09-18T17:00:00.000Z,2026-09-18T17:00:00.000Z,tom.g@wellsync.example,Tom Gallagher,President,WellSync,MIU,WellSync regulatory reporting for Texas and New Mexico,"Independent oil and gas operators file the same production data with three regulators in slightly different formats. WellSync holds the data. We propose automated regulatory filing for Texas RRC and New Mexico OCD.
 
 Execution: two developers for six months; the formats are documented and we have customers willing to test. Risk: regulator format changes, handled by a maintenance budget.
 
 Market unlock: an add-on for all 300 customers and the clearest reason for the 900 operators on spreadsheets to adopt us.
 
 ROI: $3k per year per customer on 120 customers is $360k ARR; $120k ask.",94,120000,USD,120000,round1,,,,,,,,
-gc_c28d9f7307,2026-09-17T18:00:00.000Z,2026-09-17T18:00:00.000Z,maria.l@civicledger.example,Maria Lopez,CEO,CivicLedger,GovTech,Grant management for mid-size counties,"Federal infrastructure and resilience grants have created a compliance burden counties cannot staff. CivicLedger holds the general ledger; we propose a grant management module for tracking awards, drawdowns, and reporting.
+gc_c26dface1c,2026-09-19T01:00:00.000Z,2026-09-19T01:00:00.000Z,maria.l@civicledger.example,Maria Lopez,CEO,CivicLedger,GovTech,Grant management for mid-size counties,"Federal infrastructure and resilience grants have created a compliance burden counties cannot staff. CivicLedger holds the general ledger; we propose a grant management module for tracking awards, drawdowns, and reporting.
 
 Execution: four developers and a product manager for twelve months; two counties are committed design partners. Risk: scope creep across grant programs, handled by launching with the three largest federal programs.
 
 Market unlock: a $30k-per-year module for our 90 counties, and the first product we can sell standalone into the 1,200 counties on competitor ERPs.
 
 ROI: 25 module sales plus 5 standalone within twelve months is roughly $900k ARR against a $400k ask.",103,400000,USD,400000,round1,,,,,,,,
-gc_8e9202b561,2026-09-18T14:00:00.000Z,2026-09-18T14:00:00.000Z,anne.d@courtstream.example,Anne Dubois,CEO,CourtStream,GovTech,CourtStream remote hearing scheduling,"Provincial courts hold more hearings remotely than in person, but scheduling still runs on our in-person model. We propose a remote-hearing scheduling and notification product integrated with the major video platforms.
+gc_1395061bbe,2026-09-19T09:00:00.000Z,2026-09-19T09:00:00.000Z,anne.d@courtstream.example,Anne Dubois,CEO,CourtStream,GovTech,CourtStream remote hearing scheduling,"Provincial courts hold more hearings remotely than in person, but scheduling still runs on our in-person model. We propose a remote-hearing scheduling and notification product integrated with the major video platforms.
 
 Execution: three developers for nine months; one province is a pilot partner. Risk: platform integration certification timelines.
 
 Market unlock: opens sales to tribunals and administrative bodies outside our traditional court base, a segment twice our current TAM.
 
 ROI: CAD 550k ARR from four new bodies plus upsell to existing customers within eighteen months; CAD 210k ask.",87,210000,CAD,151200,round1,,,,,,,,
-gc_629e2dbdc5,2026-09-19T12:00:00.000Z,2026-09-19T12:00:00.000Z,rachel.k@campusloop.example,Rachel Kim,CEO,CampusLoop,EdTech,CampusLoop Career Signals for community colleges,"Community colleges are funded increasingly on employment outcomes but have little visibility into where graduates land. CampusLoop holds enrolment and completion data; we propose Career Signals, which matches completions to labour-market outcomes and reports against state metrics.
+gc_e1c2004adf,2026-09-19T23:00:00.000Z,2026-09-19T23:00:00.000Z,rachel.k@campusloop.example,Rachel Kim,CEO,CampusLoop,EdTech,CampusLoop Career Signals for community colleges,"Community colleges are funded increasingly on employment outcomes but have little visibility into where graduates land. CampusLoop holds enrolment and completion data; we propose Career Signals, which matches completions to labour-market outcomes and reports against state metrics.
 
 Execution: a data partnership already negotiated, two engineers and an analyst for nine months, and a pilot with three colleges in Texas. Risk: data-matching accuracy; we will report confidence intervals rather than point estimates.
 
 Market unlock: a $20k add-on for our 140 colleges, and a standalone product for the 900 colleges on competitor SIS platforms.
 
 ROI: 40 sales in twelve months is $800k ARR against a $250k ask.",105,250000,USD,250000,round1,,,,,,,,
-gc_324e0a2a4e,2026-09-19T18:00:00.000Z,2026-09-19T18:00:00.000Z,daniel.m@gradebook.example,Daniel Mensah,CEO,GradeBook Pro,EdTech,GradeBook Pro parent app,"Parents at our 600 K-12 schools ask for a mobile app; we have only a web portal. We propose a native parent app with grades, attendance and messaging.
+gc_b8737fcdcf,2026-09-20T08:00:00.000Z,2026-09-20T08:00:00.000Z,daniel.m@gradebook.example,Daniel Mensah,CEO,GradeBook Pro,EdTech,GradeBook Pro parent app,"Parents at our 600 K-12 schools ask for a mobile app; we have only a web portal. We propose a native parent app with grades, attendance and messaging.
 
 Execution: two mobile developers for five months. Risk: app-store review; we have done this before at a prior company.
 
 Market unlock: parent-facing tools are a requirement in most district RFPs we lose.
 
 ROI: improves win rate on an estimated $1.5m of annual RFP volume; $85k ask.",74,85000,USD,85000,round1,,,,,,,,
-gc_82006cf789,2026-09-20T05:00:00.000Z,2026-09-20T05:00:00.000Z,ines.f@escolaplus.example,Inês Ferreira,CEO,EscolaPlus,EdTech,EscolaPlus tuition financing marketplace,"Private schools in Brazil lose 8–12% of families each year to affordability. EscolaPlus manages billing for 400 schools. We propose a financing marketplace where partner lenders offer instalment plans at the point of enrolment.
+gc_e7916018b3,2026-09-20T23:00:00.000Z,2026-09-20T23:00:00.000Z,ines.f@escolaplus.example,Inês Ferreira,CEO,EscolaPlus,EdTech,EscolaPlus tuition financing marketplace,"Private schools in Brazil lose 8–12% of families each year to affordability. EscolaPlus manages billing for 400 schools. We propose a financing marketplace where partner lenders offer instalment plans at the point of enrolment.
 
 Execution: two developers and a partnerships lead for nine months; two lenders have signed term sheets. Risk: regulatory approval for the referral model, on which we have legal guidance.
 
 Market unlock: a referral-fee revenue stream and a reason for the 3,000 schools on competitor systems to switch.
 
 ROI: R$1.8m of referral fees in the first twelve months at planned volumes; R$600k ask.",96,600000,BRL,108000,round1,,,,,,,,
-gc_4cd75122fa,2026-09-20T18:00:00.000Z,2026-09-20T18:00:00.000Z,sam.p@clinicore.example,Sam Patel,CEO,CliniCore,Healthcare,CliniCore prior-authorisation automation,"Specialty clinics spend 14 staff hours a week per physician on prior authorisations. CliniCore holds the clinical and payer data. We propose automating submission and status tracking for the ten largest payers.
+gc_b3723092e9,2026-09-21T08:00:00.000Z,2026-09-21T08:00:00.000Z,sam.p@clinicore.example,Sam Patel,CEO,CliniCore,Healthcare,CliniCore prior-authorisation automation,"Specialty clinics spend 14 staff hours a week per physician on prior authorisations. CliniCore holds the clinical and payer data. We propose automating submission and status tracking for the ten largest payers.
 
 Execution: three engineers for twelve months, integrating with two clearinghouses; four clinics are pilot partners. Risk: payer portal changes, mitigated by clearinghouse APIs where available.
 
 Market unlock: a $15k-per-provider-group module for our 220 groups, and the clearest ROI story we have ever had for new logos.
 
 ROI: 60 groups within twelve months is $900k ARR against a $320k ask.",91,320000,USD,320000,round1,,,,,,,,
-gc_97eaaf6f0b,2026-09-21T15:00:00.000Z,2026-09-21T15:00:00.000Z,helen.w@therapynote.example,Helen Wright,CEO,TherapyNote,Healthcare,TherapyNote outcomes dashboards for group practices,"Payers increasingly ask behavioural-health practices to demonstrate outcomes. TherapyNote collects standard measures; we propose outcomes dashboards and payer-ready reports.
+gc_7c8e08dd66,2026-09-22T07:00:00.000Z,2026-09-22T07:00:00.000Z,helen.w@therapynote.example,Helen Wright,CEO,TherapyNote,Healthcare,TherapyNote outcomes dashboards for group practices,"Payers increasingly ask behavioural-health practices to demonstrate outcomes. TherapyNote collects standard measures; we propose outcomes dashboards and payer-ready reports.
 
 Execution: two developers and a clinical advisor for six months. Risk: measure standardisation across practices.
 
 Market unlock: a requirement for the value-based contracts our larger customers are pursuing, and a wedge into 200+ group practices.
 
 ROI: $6k per year on 80 practices is $480k ARR; $110k ask.",66,110000,USD,110000,round1,,,,,,,,
-gc_46165aa5f8,2026-09-22T01:00:00.000Z,2026-09-22T01:00:00.000Z,luis.a@dentalink.example,Luis Almeida,CEO,DentaLink,Healthcare,DentaLink patient recall and reactivation engine,"Dental practices lose 20–30% of patients to lapsed recall. We propose an automated recall and reactivation engine with two-way texting and online booking.
+gc_1b56de8884,2026-09-23T14:00:00.000Z,2026-09-23T14:00:00.000Z,luis.a@dentalink.example,Luis Almeida,CEO,DentaLink,Healthcare,DentaLink patient recall and reactivation engine,"Dental practices lose 20–30% of patients to lapsed recall. We propose an automated recall and reactivation engine with two-way texting and online booking.
 
 Execution: two developers for five months; pilot with 20 practices. Risk: carrier messaging compliance, handled through a registered provider.
 
 Market unlock: a $200/month add-on across 1,500 practices, and a new-logo differentiator.
 
 ROI: 400 practices in twelve months is $960k ARR against a $95k ask.",67,95000,USD,95000,round1,,,,,,,,
-gc_adb930ea6a,2026-09-22T21:00:00.000Z,2026-09-22T21:00:00.000Z,greg.s@fleetmark.example,Greg Sullivan,CEO,FleetMark,"Transportation, Logistics, and Longtail",FleetMark ELD and compliance for small carriers,"Carriers with under 20 trucks use FleetMark for dispatch but a separate ELD vendor for hours-of-service. We propose our own ELD with integrated compliance reporting.
+gc_122f226fca,2026-09-24T14:00:00.000Z,2026-09-24T14:00:00.000Z,greg.s@fleetmark.example,Greg Sullivan,CEO,FleetMark,"Transportation, Logistics, and Longtail",FleetMark ELD and compliance for small carriers,"Carriers with under 20 trucks use FleetMark for dispatch but a separate ELD vendor for hours-of-service. We propose our own ELD with integrated compliance reporting.
 
 Execution: hardware partner selected; three developers for ten months to certify and integrate. Risk: FMCSA certification timing.
 
 Market unlock: a $40-per-truck-per-month line across 9,000 trucks in the base and a bundle that undercuts standalone ELD vendors.
 
 ROI: 3,000 trucks in twelve months is $1.4m ARR on a $240k ask.",74,240000,USD,240000,round1,,,,,,,,
-gc_ee05616c2d,2026-09-23T17:00:00.000Z,2026-09-23T17:00:00.000Z,nadia.h@portside.example,Nadia Haddad,CEO,Portside Software,"Transportation, Logistics, and Longtail",Portside customs documentation automation,"Freight forwarders using Portside re-key shipment data into customs filings. We propose automated customs documentation for US and Canadian entries.
+gc_851e047d2c,2026-09-25T15:00:00.000Z,2026-09-25T15:00:00.000Z,nadia.h@portside.example,Nadia Haddad,CEO,Portside Software,"Transportation, Logistics, and Longtail",Portside customs documentation automation,"Freight forwarders using Portside re-key shipment data into customs filings. We propose automated customs documentation for US and Canadian entries.
 
 Execution: two developers and a customs specialist for eight months. Risk: broker relationships; we position as a tool for brokers, not a replacement.
 
 Market unlock: opens the mid-size forwarder segment that requires customs integration.
 
 ROI: $5k per year on 90 customers is $450k ARR; $190k ask.",66,190000,USD,190000,round1,,,,,,,,
-gc_a67aae8d48,2026-09-24T18:00:00.000Z,2026-09-24T18:00:00.000Z,eric.l@routecraft.example,Eric Lindqvist,CEO,RouteCraft,"Transportation, Logistics, and Longtail",RouteCraft last-mile optimisation for regional couriers,"Regional couriers plan routes by hand. RouteCraft manages their orders; we propose an optimisation engine with driver app integration.
+gc_bca0ec498c,2026-09-26T00:00:00.000Z,2026-09-26T00:00:00.000Z,eric.l@routecraft.example,Eric Lindqvist,CEO,RouteCraft,"Transportation, Logistics, and Longtail",RouteCraft last-mile optimisation for regional couriers,"Regional couriers plan routes by hand. RouteCraft manages their orders; we propose an optimisation engine with driver app integration.
 
 Execution: one optimisation engineer and one developer for seven months; three couriers in a pilot. Risk: real-world constraints not captured by the model; the pilot exists to find them.
 
 Market unlock: repositions us against the two enterprise vendors that ignore sub-50-vehicle couriers.
 
 ROI: $9k per year on 50 couriers is $450k ARR; $130k ask.",73,130000,USD,130000,round1,,,,,,,,
-gc_94fbc71b8b,2026-09-25T23:00:00.000Z,2026-09-25T23:00:00.000Z,nora.b@lendcore.example,Nora Bishop,CEO,LendCore,Financial Services,LendCore embedded credit decisioning for community banks,"Community banks using LendCore for loan servicing still make credit decisions in spreadsheets and email. We propose an embedded decisioning module that scores applications against the bank's own policy and portfolio history, with every recommendation explainable to an examiner.
+gc_c0053a5c18,2026-09-27T09:00:00.000Z,2026-09-27T09:00:00.000Z,nora.b@lendcore.example,Nora Bishop,CEO,LendCore,Financial Services,LendCore embedded credit decisioning for community banks,"Community banks using LendCore for loan servicing still make credit decisions in spreadsheets and email. We propose an embedded decisioning module that scores applications against the bank's own policy and portfolio history, with every recommendation explainable to an examiner.
 
 Execution: two engineers and a credit-risk analyst for ten months; three banks have agreed to pilot, and our compliance counsel has reviewed the model-governance approach. Risk: examiner acceptance, which is why explainability is the first feature, not the last.
 
 Market unlock: a $40k-per-year module for our 90 banks, and our first product that credit unions on competitor cores can buy standalone.
 
 ROI: 20 sales in twelve months is $800k ARR on a $300k ask.",113,300000,USD,300000,round1,,,,,,,,
-gc_c800cffe46,2026-09-26T16:00:00.000Z,2026-09-26T16:00:00.000Z,david.o@trustbook.example,David Okonkwo,CEO,TrustBook Systems,Financial Services,TrustBook client portal for trust and estate administrators,"Trust companies using TrustBook field hundreds of beneficiary calls a month asking for statements and distribution status. We propose a beneficiary portal with statements, documents and secure messaging.
+gc_c82eb5c045,2026-09-28T02:00:00.000Z,2026-09-28T02:00:00.000Z,david.o@trustbook.example,David Okonkwo,CEO,TrustBook Systems,Financial Services,TrustBook client portal for trust and estate administrators,"Trust companies using TrustBook field hundreds of beneficiary calls a month asking for statements and distribution status. We propose a beneficiary portal with statements, documents and secure messaging.
 
 Execution: two developers and a designer for six months; two customers are pilot partners. Risk: identity verification for beneficiaries, handled through an established provider.
 
 Market unlock: a $12k-per-year add-on across 60 customers and a requirement in most RFPs we currently lose to the two larger vendors.
 
 ROI: 35 customers in twelve months is $420k ARR on a $140k ask.",87,140000,USD,140000,round1,,,,,,,,
-gc_6a17cd8e6c,2026-09-27T07:00:00.000Z,2026-09-27T07:00:00.000Z,jw.s@presspage.example,Jan-Willem Schalkwijk,CEO,Presspage,Media and Communications,Presspage Discover: executive insights tier,"Presspage sells €30k contracts to communications teams but misses the executive layer where larger budgets live. We propose Presspage Discover: a premium tier with media-monitoring integration, predictive insights and an executive dashboard on reputation and communication ROI.
+gc_4d648753d3,2026-09-28T16:00:00.000Z,2026-09-28T16:00:00.000Z,jw.s@presspage.example,Jan-Willem Schalkwijk,CEO,Presspage,Media and Communications,Presspage Discover: executive insights tier,"Presspage sells €30k contracts to communications teams but misses the executive layer where larger budgets live. We propose Presspage Discover: a premium tier with media-monitoring integration, predictive insights and an executive dashboard on reputation and communication ROI.
 
 Execution: a data engineer, an ML engineer and a front-end developer for twelve months, delivered in two phases: internal data first, external monitoring data second. Risk: over-scoping; phase one ships a customer-usable product on our own data alone.
 
 Market unlock: a €20k add-on for 200+ existing customers and a repositioning of new sales toward CMO/CFO buyers at €100k+ contracts. Enterprise clients consistently ask for analytics we cannot deliver today.
 
 ROI: 50 add-on sales in the first twelve months is €1m ARR; payback in 8–10 months on a €380k ask.",126,380000,EUR,440800,round1,,,,,,,,
-gc_fae0f263e8,2026-09-28T15:00:00.000Z,2026-09-28T15:00:00.000Z,olivia.b@newsdesk.example,Olivia Bennett,CEO,Newsdesk Suite,Media and Communications,Newsdesk Suite podcast and audio publishing,"Our newsroom customers are launching podcasts on standalone tools. We propose audio publishing, hosting and analytics inside Newsdesk Suite.
+gc_192e9c3665,2026-09-29T11:00:00.000Z,2026-09-29T11:00:00.000Z,olivia.b@newsdesk.example,Olivia Bennett,CEO,Newsdesk Suite,Media and Communications,Newsdesk Suite podcast and audio publishing,"Our newsroom customers are launching podcasts on standalone tools. We propose audio publishing, hosting and analytics inside Newsdesk Suite.
 
 Execution: two developers for six months; five customers have asked for this. Risk: hosting costs at scale, priced into the tier.
 
 Market unlock: a £6k-per-year add-on and a reason for regional publishers to consolidate on us.
 
 ROI: 40 customers in twelve months is £240k ARR; £140k ask.",66,140000,GBP,189000,round1,,,,,,,,
-gc_fbfa1e915f,2026-09-29T04:00:00.000Z,2026-09-29T04:00:00.000Z,kai.z@signalhub.example,Kai Zhang,CEO,SignalHub,Media and Communications,SignalHub SMS-to-RCS migration for enterprise alerts,"Enterprises using SignalHub for alerts are moving from SMS to RCS and rich messaging. We propose an RCS channel with rich templates and delivery analytics.
+gc_7e4cee3e56,2026-09-30T04:00:00.000Z,2026-09-30T04:00:00.000Z,kai.z@signalhub.example,Kai Zhang,CEO,SignalHub,Media and Communications,SignalHub SMS-to-RCS migration for enterprise alerts,"Enterprises using SignalHub for alerts are moving from SMS to RCS and rich messaging. We propose an RCS channel with rich templates and delivery analytics.
 
 Execution: two developers for seven months; carrier agreements in progress. Risk: carrier availability by region, so we launch in the US first.
 
 Market unlock: higher-margin messaging and a differentiator against commodity SMS gateways.
 
 ROI: 20% margin uplift on $2m of messaging revenue plus $300k of new customers; $200k ask.",74,200000,USD,200000,round1,,,,,,,,
-gc_1bf26e2310,2026-09-29T15:00:00.000Z,2026-09-29T15:00:00.000Z,hamish.d@shapeshifter.example,Hamish Dean,CEO,Shapeshifter,MIU,AI pattern prediction from tech packs,"Brands lose billions annually from 15–30% fabric costing errors at the design stage, because patterns are only created after sampling. We propose a dual AI system that predicts fabric consumption directly from tech packs: computer vision on sketches to identify style features, and a regression model trained on our historical pattern library to estimate consumption.
+gc_abfecd6174,2026-09-30T13:00:00.000Z,2026-09-30T13:00:00.000Z,hamish.d@shapeshifter.example,Hamish Dean,CEO,Shapeshifter,MIU,AI pattern prediction from tech packs,"Brands lose billions annually from 15–30% fabric costing errors at the design stage, because patterns are only created after sampling. We propose a dual AI system that predicts fabric consumption directly from tech packs: computer vision on sketches to identify style features, and a regression model trained on our historical pattern library to estimate consumption.
 
 Execution: two ML engineers and one product engineer for twelve months; three brand customers have agreed to supply training data and pilot the output. First 90 days: baseline model on our own 12,000-pattern archive. Risk: prediction accuracy on novel styles; we will publish accuracy bands and position the tool for costing, not cutting.
 
 Market unlock: 500+ brands and 2,000+ manufacturers who never buy pattern software today, in a $200m market for pre-sampling prediction.
 
 ROI: $600k ARR within twelve months from ten brand customers at $60k, on a $500k ask; the asymmetric upside is a new product category.",152,500000,USD,500000,round1,,,,,,,,
-gc_04f65c8690,2026-09-30T18:00:00.000Z,2026-09-30T18:00:00.000Z,brenton.o@touchstream.example,Brenton Ough,CEO,Touchstream,ANZ,Touchstream streaming QoE for sports rights holders,"Sports rights holders are moving direct-to-consumer and cannot see viewer quality-of-experience across their distribution partners. Touchstream monitors streams for broadcasters; we propose a QoE product for rights holders aggregating data across their partners.
+gc_34a58b9bcb,2026-10-01T05:00:00.000Z,2026-10-01T05:00:00.000Z,brenton.o@touchstream.example,Brenton Ough,CEO,Touchstream,ANZ,Touchstream streaming QoE for sports rights holders,"Sports rights holders are moving direct-to-consumer and cannot see viewer quality-of-experience across their distribution partners. Touchstream monitors streams for broadcasters; we propose a QoE product for rights holders aggregating data across their partners.
 
 Execution: two engineers and a solutions consultant for nine months; one league is a design partner. Risk: partner data access, mitigated by starting with public-signal monitoring.
 
 Market unlock: a new buyer (rights holders) with larger budgets than our broadcaster base, in a segment no competitor serves.
 
 ROI: three rights holders at A$250k in twelve months is A$750k ARR against an A$300k ask.",95,300000,AUD,195000,round1,,,,,,,,
-gc_150d13aab2,2026-10-01T02:00:00.000Z,2026-10-01T02:00:00.000Z,mei.t@harbourbooks.example,Mei Tan,CEO,HarbourBooks,ANZ,HarbourBooks embedded payments for marine trades,"Marine trade businesses using HarbourBooks invoice through us but collect payments elsewhere. We propose embedded card and bank payments with automatic reconciliation.
+gc_52f074198b,2026-10-01T19:00:00.000Z,2026-10-01T19:00:00.000Z,mei.t@harbourbooks.example,Mei Tan,CEO,HarbourBooks,ANZ,HarbourBooks embedded payments for marine trades,"Marine trade businesses using HarbourBooks invoice through us but collect payments elsewhere. We propose embedded card and bank payments with automatic reconciliation.
 
 Execution: payments partner selected; two developers for six months. Risk: partner onboarding timelines.
 
 Market unlock: transaction revenue on NZ$120m of annual invoicing, plus a lower-churn product.
 
 ROI: 0.6% take rate on 40% adoption is NZ$290k ARR; NZ$150k ask.",60,150000,NZD,88500,round1,,,,,,,,
-gc_43d6cbf4ef,2026-10-01T23:00:00.000Z,2026-10-01T23:00:00.000Z,liam.w@paddockiq.example,Liam Walsh,CEO,PaddockIQ,ANZ,PaddockIQ carbon reporting for livestock farms,"Australian processors and banks are starting to require on-farm emissions data. PaddockIQ already tracks herd and pasture data for 1,100 farms. We propose a carbon reporting module aligned to the national framework.
+gc_185d8793f8,2026-10-02T23:00:00.000Z,2026-10-02T23:00:00.000Z,liam.w@paddockiq.example,Liam Walsh,CEO,PaddockIQ,ANZ,PaddockIQ carbon reporting for livestock farms,"Australian processors and banks are starting to require on-farm emissions data. PaddockIQ already tracks herd and pasture data for 1,100 farms. We propose a carbon reporting module aligned to the national framework.
 
 Execution: one agronomist and two developers for eight months; two processors have asked to pilot with their suppliers. Risk: methodology changes, tracked by our advisory partner.
 
